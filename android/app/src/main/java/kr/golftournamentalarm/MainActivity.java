@@ -505,6 +505,26 @@ public final class MainActivity extends Activity {
         published.setText("대회 공개");
         published.setChecked(previousPublished);
         page.addView(published);
+        if (eventId != null) {
+            button(page, "삭제", () -> new android.app.AlertDialog.Builder(this)
+                .setMessage("정말 삭제하시겠습니까?")
+                .setNegativeButton("아니오", (dialog, which) -> dialog.dismiss())
+                .setPositiveButton("예", (dialog, which) -> {
+                    String uid = FirebaseAuth.getInstance().getUid();
+                    if (uid == null) { toast("로그인이 필요합니다."); return; }
+                    FirebaseFirestore.getInstance().collection("organizerEvents").document(eventId)
+                        .get().addOnSuccessListener(this, event -> {
+                            if (!event.exists() || !uid.equals(event.getString("ownerUid"))) {
+                                toast("본인이 등록한 대회만 삭제할 수 있습니다."); return;
+                            }
+                            event.getReference().delete()
+                                .addOnSuccessListener(this, unused -> {
+                                    toast("대회가 삭제되었습니다."); showManage();
+                                })
+                                .addOnFailureListener(this, error -> toast("삭제하지 못했습니다. 권한을 확인하세요."));
+                        }).addOnFailureListener(this, error -> toast("대회 정보를 확인하지 못했습니다."));
+                }).show());
+        }
         button(page, "저장", () -> {
             String name = title.getText().toString().trim();
             String uid = FirebaseAuth.getInstance().getUid();
