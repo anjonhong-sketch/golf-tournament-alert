@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T06:17:58.680957+00:00",
+  "updated_at": "2026-11-19T07:11:06.371Z",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -194,6 +194,22 @@
       "event_status": "진행 중"
     },
     {
+      "id": "titleist-2026-korea-final",
+      "provider": "팀 타이틀리스트",
+      "title": "2026 팀 타이틀리스트 코리아 챔피언십 최종전",
+      "category": "아마추어 필드골프",
+      "region": "강원 원주시 오크밸리 CC",
+      "start_date": "2026-11-03",
+      "end_date": "2026-11-04",
+      "entry_fee": null,
+      "registration_status": "접수 마감",
+      "amateur_eligible": null,
+      "official_url": "https://team.titleist.co.kr/tt-championship/TeamTitleistKorea_status.do",
+      "eligibility": "최종전 참가 자격 및 모집 방식은 공식 안내 확인.",
+      "event_status": "종료",
+      "verification": "organizer_verified"
+    },
+    {
       "id": "kga-1716",
       "provider": "대한골프협회",
       "title": "제2회 대한체육회장배 생활체육 전국골프대회",
@@ -249,6 +265,22 @@
       "verification": "organizer_verified"
     },
     {
+      "id": "titleist-2026-apparel-invitational",
+      "provider": "타이틀리스트 어패럴",
+      "title": "2026 타이틀리스트 어패럴 인비테이셔널",
+      "category": "아마추어 필드골프",
+      "region": "충남 천안시 우정힐스 CC",
+      "start_date": "2026-11-02",
+      "end_date": "2026-11-02",
+      "entry_fee": null,
+      "registration_status": "접수 마감",
+      "amateur_eligible": true,
+      "official_url": "https://origin-www.titleistapparel.co.kr/content/2026_JourneyToExcellence",
+      "eligibility": "타이틀리스트 멤버십 고객 대상. 모집 기간 2026-07-01~10-04, 구매 이력 기반 선정.",
+      "event_status": "종료",
+      "verification": "organizer_verified"
+    },
+    {
       "id": "sg-daejeon-jukdong-2026-11",
       "provider": "SG골프 죽동점",
       "title": "대전 SG 죽동점 매장대회 (공지 표기 73회)",
@@ -263,6 +295,22 @@
       "registration_status": "미확인",
       "verification": "official_schedule",
       "event_status": "진행 중"
+    },
+    {
+      "id": "titleist-2026-players",
+      "provider": "팀 타이틀리스트",
+      "title": "2026 팀 타이틀리스트 플레이어스 챔피언십",
+      "category": "아마추어 필드골프",
+      "region": "강원 원주시 성문안 CC",
+      "start_date": "2026-10-27",
+      "end_date": "2026-10-28",
+      "entry_fee": "600,000원",
+      "registration_status": "접수 마감",
+      "amateur_eligible": true,
+      "official_url": "https://team.titleist.co.kr/tt-championship/2026_championship_info.do",
+      "eligibility": "팀 타이틀리스트 멤버 대상. 세부 참가 조건은 공식 요강 확인.",
+      "event_status": "종료",
+      "verification": "organizer_verified"
     },
     {
       "id": "sg-daejeon-lucky-2026-11",
