@@ -220,10 +220,24 @@ public final class MainActivity extends Activity {
         if ("login".equals(url.getHost())) { showAccount(false); return; }
         if ("manage".equals(url.getHost())) { showManage(); return; }
         if ("admin".equals(url.getHost())) { showAdmin(); return; }
-        if (!"room".equals(url.getHost()) || feed == null || url.getPathSegments().size() != 2) return;
+        if (!"room".equals(url.getHost()) || url.getPathSegments().size() != 2) return;
         String kind = url.getPathSegments().get(0);
         String id = url.getPathSegments().get(1);
-        if (!("chat".equals(kind) || "reviews".equals(kind)) || !id.matches("[a-z0-9-]{1,80}")) return;
+        if (!("chat".equals(kind) || "reviews".equals(kind)) || !id.matches("[a-zA-Z0-9-]{1,80}")) return;
+        if (id.startsWith("custom-") && id.matches("custom-[0-9]{10,20}")) {
+            String title = url.getQueryParameter("title");
+            if (title == null || title.isBlank() || title.length() > 120) return;
+            JSONObject local = new JSONObject();
+            try {
+                local.put("id", id);
+                local.put("title", title);
+                showRoom(local, kind);
+            } catch (org.json.JSONException ignored) {
+                toast("대회 정보를 열지 못했습니다.");
+            }
+            return;
+        }
+        if (feed == null) return;
         JSONArray entries = feed.optJSONArray("tournaments");
         for (int index = 0; entries != null && index < entries.length(); index++) {
             JSONObject event = entries.optJSONObject(index);
@@ -232,6 +246,18 @@ public final class MainActivity extends Activity {
                 return;
             }
         }
+        FirebaseFirestore.getInstance().collection("organizerEvents").document(id).get()
+            .addOnSuccessListener(this, doc -> {
+                if (!doc.exists() || !Boolean.TRUE.equals(doc.getBoolean("published"))) return;
+                JSONObject organizerEvent = new JSONObject();
+                try {
+                    organizerEvent.put("id", id);
+                    organizerEvent.put("title", doc.getString("title"));
+                    showRoom(organizerEvent, kind);
+                } catch (org.json.JSONException ignored) {
+                    toast("대회 정보를 열지 못했습니다.");
+                }
+            }).addOnFailureListener(this, error -> toast("대회 정보를 확인하지 못했습니다."));
     }
 
     private void updateList() {
@@ -446,6 +472,10 @@ public final class MainActivity extends Activity {
                             for (DocumentSnapshot event : results) {
                                 String name = event.getString("title");
                                 label(events, name, 17, true);
+                                if (Boolean.TRUE.equals(event.getBoolean("published"))) {
+                                    button(events, "대회 채팅", () -> showOrganizerRoom(event.getId(), name, "chat"));
+                                    button(events, "참가 후기", () -> showOrganizerRoom(event.getId(), name, "reviews"));
+                                }
                                 button(events, "수정", () -> showEventEditor(event.getId(), name,
                                     Boolean.TRUE.equals(event.getBoolean("published"))));
                             }
@@ -456,6 +486,17 @@ public final class MainActivity extends Activity {
             }).addOnFailureListener(this, error -> toast("승인 상태를 확인할 수 없습니다."));
     }
 
+
+    private void showOrganizerRoom(String id, String title, String kind) {
+        JSONObject event = new JSONObject();
+        try {
+            event.put("id", id);
+            event.put("title", title);
+            showRoom(event, kind);
+        } catch (org.json.JSONException ignored) {
+            toast("대회 채팅방을 열 수 없습니다.");
+        }
+    }
 
     private void showAdmin() {
         if (!firebaseReady()) return;
