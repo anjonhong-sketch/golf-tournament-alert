@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T07:43:59.173655+00:00",
+  "updated_at": "2026-11-19T07:45:04.678014+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -1160,7 +1160,7 @@
   "duplicates_suppressed": 17,
   "coverage_audit": {
     "scope": "검색된 자료와 등록 목록 비교. 전국 대회 전체 대비 누락률이 아닙니다.",
-    "registered": 45,
+    "registered": 62,
     "unverified_leads": 4,
     "failed_sources": [
       "SG골프"
@@ -1183,7 +1183,7 @@
         "unverified_leads": 0
       },
       "미드아마추어": {
-        "registered": 9,
+        "registered": 25,
         "unverified_leads": 0
       },
       "주니어": {
