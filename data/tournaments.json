@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T01:01:10.115818+00:00",
+  "updated_at": "2026-11-19T01:33:42.120768+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -47,6 +47,14 @@
     {
       "provider": "웹 검색",
       "source_url": "https://api.search.brave.com/res/v1/web/search",
+      "ok": null,
+      "detail": "검색 키 미설정",
+      "candidate_count": 0,
+      "schedule_count": 0
+    },
+    {
+      "provider": "네이버 블로그·카페",
+      "source_url": "https://openapi.naver.com/v1/search",
       "ok": null,
       "detail": "검색 키 미설정",
       "candidate_count": 0,
@@ -98,6 +106,25 @@
       "official_url": "https://screen.sggolf.com/store/cupList",
       "event_status": "진행 중",
       "registration_status": "미확인"
+    },
+    {
+      "id": "udr-cheonan-buldang-8920",
+      "title": "11월 UDR멤버스 천안불당점 스크린대회",
+      "provider": "UDR멤버스 천안불당점",
+      "category": "스크린골프",
+      "region": "충남 천안시 서북구 불당25로 244 코아루와이드시티 201호",
+      "start_date": "2026-11-10",
+      "end_date": "2026-11-30",
+      "entry_fee": "M쿠폰 사용 (원화 가격 미확인)",
+      "registration_status": "매장 참여",
+      "amateur_eligible": true,
+      "eligibility": "UDR멤버스 매장 회원 대상. 챔피언쉽에서 매장 스크린대회 선택. 11월 30일 오후 10시 종료.",
+      "official_url": "https://blog.naver.com/buldangudr/224470461068",
+      "source_urls": [
+        "https://www.okonms.co.kr/theongc_china/wc_use/c_use_outline.php?championship_idx=8920&home_show=1"
+      ],
+      "event_status": "진행 중",
+      "verification": "organizer_verified"
     },
     {
       "id": "friends-2026-quantum-9x-autumn",
