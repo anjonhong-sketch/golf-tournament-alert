@@ -1,20 +1,121 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T00:38:56.625655+00:00",
-  "note": "공식 사이트에서 발견한 후보 링크이며 참가 가능 여부와 일정은 미검증",
+  "updated_at": "2026-11-19T00:54:31.836520+00:00",
+  "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
       "provider": "프렌즈스크린",
-      "source_url": "https://www.friendsscreen.kr/main/contest",
-      "ok": true,
+      "source_url": "https://www.friendsscreen.kr/main/kakao-intro",
+      "ok": null,
+      "detail": "오프라인 실행",
       "candidate_count": 0
     },
     {
-      "provider": "골프존 GTOUR",
-      "source_url": "https://gtour.com/",
-      "ok": false,
-      "error": "<urlopen error timed out>"
+      "provider": "골프존",
+      "source_url": "https://news.golfzon.com/ko/",
+      "ok": null,
+      "detail": "오프라인 실행",
+      "candidate_count": 0
+    },
+    {
+      "provider": "대한골프협회",
+      "source_url": "https://kgagolf.or.kr/web/life/schedule",
+      "ok": null,
+      "detail": "오프라인 실행",
+      "candidate_count": 0
+    },
+    {
+      "provider": "한국미드아마추어골프연맹",
+      "source_url": "https://www.kmagf.co.kr/tour/list",
+      "ok": null,
+      "detail": "오프라인 실행",
+      "candidate_count": 0
+    },
+    {
+      "provider": "웹 검색",
+      "source_url": "https://api.search.brave.com/res/v1/web/search",
+      "ok": null,
+      "detail": "오프라인 실행",
+      "candidate_count": 0
     }
   ],
-  "tournaments": []
+  "tournaments": [
+    {
+      "id": "friends-2026-quantum-9x-autumn",
+      "provider": "프렌즈스크린",
+      "title": "KGIA와 함께하는 퀀텀 9X 가을 대항전",
+      "category": "스크린골프",
+      "region": "전국 프렌즈 스크린 퀀텀(Q) 매장",
+      "start_date": "2026-11-05",
+      "end_date": "2026-12-09",
+      "entry_fee": null,
+      "registration_status": "매장 참여",
+      "amateur_eligible": true,
+      "official_url": "https://www.friendsscreen.kr/main/kakao-intro",
+      "source_urls": [
+        "https://www.etnews.com/20261109000068"
+      ],
+      "eligibility": "퀀텀 매장에서 로그인한 뒤 공식대회 메뉴에서 참여. 지정 2개 코스 18홀씩 완주.",
+      "event_status": "진행 중",
+      "verification": "organizer_verified"
+    },
+    {
+      "id": "kga-1716",
+      "provider": "대한골프협회",
+      "title": "제2회 대한체육회장배 생활체육 전국골프대회",
+      "category": "아마추어 필드골프",
+      "region": "충북 음성군 코스카 컨트리클럽",
+      "start_date": "2026-11-02",
+      "end_date": "2026-11-03",
+      "entry_fee": null,
+      "registration_status": "접수 마감",
+      "amateur_eligible": true,
+      "official_url": "https://kgagolf.or.kr/web/life/tour/notice?tournamentCode=1716",
+      "source_urls": [
+        "https://kgagolf.or.kr/web/media/newsDetail?boardCode=7079&partCode=1585",
+        "https://kgagolf.or.kr/web/life/tour/noticeDetail?boardCode=7084&partCode=2109&tournamentCode=1716"
+      ],
+      "eligibility": "2007년생 이상 생활체육인. 동호인 등록 및 핸디캡 인덱스 산출 필요. 개인 접수는 조기 마감.",
+      "registration_start": "2026-09-21",
+      "event_status": "종료",
+      "verification": "organizer_verified"
+    },
+    {
+      "id": "golfzon-1306814",
+      "provider": "골프존",
+      "title": "골프존마켓 스크린골프 대회",
+      "category": "스크린골프",
+      "region": "전국 지정 시뮬레이터 설치 골프존파크 매장",
+      "start_date": "2026-09-04",
+      "end_date": "2026-09-27",
+      "entry_fee": null,
+      "registration_status": "접수 마감",
+      "amateur_eligible": true,
+      "official_url": "https://news.golfzon.com/ko/%EA%B3%A8%ED%94%84%EC%A1%B4%EB%A7%88%EC%BC%93-%EA%B3%A8%ED%94%84%EB%8C%80%EC%A0%84-%EB%A7%9E%EC%95%84-%EA%B3%A8%ED%94%84%EC%A1%B4%EB%A7%88%EC%BC%93-%EC%8A%A4%ED%81%AC%EB%A6%B0%EA%B3%A8/",
+      "eligibility": "지원 기종에서 로그인 후 대회 번호 1306814 검색.",
+      "event_status": "종료",
+      "verification": "organizer_verified"
+    },
+    {
+      "id": "kga-2026-mcst-14",
+      "provider": "대한골프협회",
+      "title": "제14회 문화체육관광부장관배 생활체육 전국골프대회",
+      "category": "아마추어 필드골프",
+      "region": "전북 군산 컨트리클럽 토너먼트 코스",
+      "start_date": "2026-08-31",
+      "end_date": "2026-09-01",
+      "entry_fee": null,
+      "registration_status": "접수 마감",
+      "amateur_eligible": true,
+      "official_url": "https://www.kgagolf.or.kr/web/media/newsDetail?boardCode=6996&partCode=1585",
+      "source_urls": [
+        "https://kgagolf.or.kr/web/notice/noticeDetail?boardCode=6999&partCode=1584"
+      ],
+      "eligibility": "세부 참가 조건은 대회 요강 확인.",
+      "event_status": "종료",
+      "verification": "organizer_verified"
+    }
+  ],
+  "candidates": [],
+  "duplicates_suppressed": 0
 }

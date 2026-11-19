@@ -1,0 +1,23 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /tournaments/{eventId}/{kind}/{postId} {
+      function knownRoom() {
+        return eventId.matches('[a-z0-9-]{1,80}') && kind in ['chat', 'reviews'];
+      }
+      function validPost() {
+        let post = request.resource.data;
+        return post.keys().hasAll(['author', 'body', 'createdAt'])
+          && post.keys().hasOnly(['author', 'body', 'createdAt'])
+          && post.author == request.auth.uid
+          && post.body is string && post.body.size() > 0
+          && post.body.size() <= (kind == 'chat' ? 300 : 1500)
+          && post.createdAt == request.time;
+      }
+      allow get: if request.auth != null && knownRoom();
+      allow list: if request.auth != null && knownRoom() && request.query.limit <= 100;
+      allow create: if request.auth != null && knownRoom() && validPost();
+      allow delete: if request.auth != null && knownRoom() && resource.data.author == request.auth.uid;
+    }
+  }
+}
