@@ -101,6 +101,15 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(audit["skipped_sources"], ["대한골프협회"])
         self.assertEqual(audit["review_queue"][0]["discovery_url"], "https://example.com/lead")
 
+    def test_official_schedule_change_detects_date_mismatch(self):
+        verified = [{"id": "kmagf-2026-example", "provider": "한국미드아마추어골프연맹",
+                     "title": "2026 예시 미드아마 골프대회", "start_date": "2026-10-10", "end_date": "2026-10-11"}]
+        page = "<div>2026 예시 미드아마 골프대회 남성선수권부 내장산CC 미정 2026.10.12(Mon) ~ 2026.10.13(Tue) 종료</div>"
+        changes = collector.official_schedule_changes(verified, page)
+        self.assertEqual(len(changes), 1)
+        self.assertEqual(changes[0]["official"], ["2026-10-12", "2026-10-13"])
+        self.assertEqual(verified[0]["start_date"], "2026-10-10")
+
     def test_web_results_do_not_claim_organizer_verification(self):
         results = '{"web":{"results":[{"title":"전국 아마추어 골프대회","url":"https://example.com/e"}]}}'
         with patch.object(collector, "fetch", return_value=results):
