@@ -17,7 +17,7 @@ VERIFIED = ROOT / "data/verified_tournaments.json"
 KST = timezone(timedelta(hours=9))
 SOURCES = [
     ("프렌즈스크린", "https://www.friendsscreen.kr/main/kakao-intro", "스크린골프"),
-    ("골프존", "https://news.golfzon.com/ko/", "스크린골프"),
+    ("골프존", "https://news.golfzon.com/ko/category/press-center/press-release/", "스크린골프"),
     ("SG골프", "https://screen.sggolf.com/store/cupList", "스크린골프"),
     ("대한골프협회", "https://kgagolf.or.kr/web/life/schedule", "아마추어 필드골프"),
     ("한국미드아마추어골프연맹", "https://www.kmagf.co.kr/tour/list", "아마추어 필드골프"),
@@ -27,8 +27,8 @@ SEARCH_TERMS = [
     "스크린골프 대회 참가 접수 골프존 프렌즈스크린 전국",
     "아마추어 필드골프 골프대회 참가 신청 생활체육 전국 지역",
 ]
-EVENT = re.compile(r"골프.{0,32}(?:대회|챔피언십)|대항전|아마추어.{0,32}(?:대회|클래식|챔피언십)")
-EXCLUDED = re.compile(r"파크\s*골프|결과\s*발표|생중계|대회\s*후기")
+EVENT = re.compile(r"팔도페스티벌|골프.{0,32}(?:대회|챔피언십)|대항전|아마추어.{0,32}(?:대회|클래식|챔피언십)")
+EXCLUDED = re.compile(r"파크\s*골프|결과\s*발표|생중계|대회\s*후기|\bW?GTOUR\b", re.IGNORECASE)
 UNKNOWN = "미확인"
 
 
@@ -232,7 +232,7 @@ def collect(previous, now, offline=False):
     results = []
     old = [*previous.get("candidates", []), *(
         event for event in previous.get("tournaments", [])
-        if event["verification"] == "official_schedule"
+        if event["verification"] == "official_schedule" and event["id"] not in ids
     )]
 
     def check(provider, source, discover, skipped=None):
