@@ -101,7 +101,7 @@ function render() {
             : !item.candidate && (scope === 'archive' ? ended : !ended);
         const matchRegion = !region || item.region?.startsWith('전국') ||
             (areas[region] || [region]).some(area => item.region?.startsWith(area));
-        return (active === 'fav' ? favorites.has(item.id) : inScope && (active === 'screen' ? item.type === 'screen' : item.type === active))
+        return (active === 'fav' ? favorites.has(item.id) : inScope && (query ? true : active === 'screen' ? item.type === 'screen' : item.type === active))
             && matchRegion && (!status || storedStatus(item.status) === status)
             && [item.name, item.venue, item.region, item.provider, item.note].join(' ').toLowerCase().includes(query);
     });
