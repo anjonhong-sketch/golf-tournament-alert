@@ -207,7 +207,7 @@ def naver_candidates(client_id, secret):
         for term in [*SEARCH_TERMS, *LOCAL_TERMS]:
             query = urlencode({"query": term if term in LOCAL_TERMS else f"2026 {term}", "display": 30, "sort": "date"})
             response = json.loads(fetch(f"{NAVER_SEARCH_URL}/{channel}.json?{query}", headers))
-            matches.extend(search_results("네이버 블로그·카페·뉴스", response.get("items", []), "link"))
+            matches.extend(search_results("네이버 블로그·카페·뉴스", response.get("items", []), "originallink" if channel == "news" else "link"))
     return matches
 
 
@@ -215,7 +215,7 @@ def search_results(provider, results, url_key):
     entries = []
     for item in results:
         title = html.unescape(re.sub(r"<[^>]+>", "", item["title"])).strip()
-        url = canonical(item[url_key])
+        url = canonical(item.get(url_key) or item.get("link", ""))
         if url and EVENT.search(title) and not EXCLUDED.search(title):
             entry = candidate(provider, title, url, "스크린골프" if re.search(r"스크린|GTOUR|골프존|SG골프", title, re.IGNORECASE) else "아마추어 필드골프")
             entry["discovery_url"] = entry.pop("official_url")
