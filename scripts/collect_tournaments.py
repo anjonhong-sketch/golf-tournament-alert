@@ -278,30 +278,39 @@ def deduplicate(verified, candidates):
 
 
 def official_schedule_changes(verified, html_text):
-    """Compare published KMAGF regular-tour listings; never overwrite curated facts silently."""
+    """Flag date and venue discrepancies on KMAGF's published schedule for human review."""
     parser = Links()
     parser.feed(html_text)
     visible = " ".join(parser.visible)
     changes = []
-    # Match the displayed tournament title, then the venue and the two date ranges.
+    date_pattern = re.compile(r"\\d{4}[.\\-/]\\d{2}[.\\-/]\\d{2}")
     for event in verified:
         if event.get("provider") != "한국미드아마추어골프연맹" or not event.get("id", "").startswith("kmagf-2026-"):
             continue
         title = event["title"]
-        # Official title sometimes includes division suffixes, but must begin with the curated title.
-        match = re.search(re.escape(title) + r".{0,160}?(\\d{4}\\.\\d{2}\\.\\d{2})", visible)
-        if not match:
-            continue  # An absent listing is not proof that a tournament was canceled.
-        fragment = visible[match.start():match.start()+250]
-        dates = re.findall(r"\\d{4}\\.\\d{2}\\.\\d{2}", fragment)
-        if len(dates) < 2:
-            continue
-        start, end = dates[-2].replace(".", "-"), dates[-1].replace(".", "-")
-        if start != event.get("start_date") or end != event.get("end_date"):
-            changes.append({"id": event["id"], "title": title, "field": "event_dates",
-                            "registered": [event.get("start_date"), event.get("end_date")],
-                            "official": [start, end],
-                            "source_url": "https://www.kmagf.co.kr/tour/schedule"})
+        position = visible.find(title)
+        if position < 0:
+            continue  # Missing from a page is not evidence of cancellation.
+        # Bound extraction to the next listing so dates from adjacent events are not mixed.
+        fragment = visible[position + len(title):position + len(title) + 280]
+        dates = date_pattern.findall(fragment)
+        if len(dates) >= 2:
+            start, end = [date.fromisoformat(value.replace(".", "-").replace("/", "-")).isoformat()
+                          for value in dates[:2]]
+            if start <= end and (start != event.get("start_date") or end != event.get("end_date")):
+                changes.append({"id": event["id"], "title": title, "field": "event_dates",
+                                "registered": [event.get("start_date"), event.get("end_date")],
+                                "official": [start, end],
+                                "source_url": "https://www.kmagf.co.kr/tour/schedule"})
+        # Venue is only flagged when a recognizable course name appears in this listing.
+        venues = re.findall(r"[가-힣A-Za-z0-9· ]{2,35}(?:CC|GC|골프클럽|컨트리클럽)", fragment[:160])
+        if venues and event.get("region"):
+            venue = venues[0].strip()
+            registered = event["region"]
+            if venue not in registered and not any(part in venue for part in registered.split() if len(part) >= 4):
+                changes.append({"id": event["id"], "title": title, "field": "venue",
+                                "registered": registered, "official": venue,
+                                "source_url": "https://www.kmagf.co.kr/tour/schedule"})
     return changes
 
 
