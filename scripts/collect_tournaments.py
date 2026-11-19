@@ -283,7 +283,7 @@ def official_schedule_changes(verified, html_text):
     parser.feed(html_text)
     visible = " ".join(parser.visible)
     changes = []
-    date_pattern = re.compile(r"\\d{4}[.\\-/]\\d{2}[.\\-/]\\d{2}")
+    date_pattern = re.compile(r"\d{4}[./-]\d{2}[./-]\d{2}")
     for event in verified:
         if event.get("provider") != "한국미드아마추어골프연맹" or not event.get("id", "").startswith("kmagf-2026-"):
             continue
