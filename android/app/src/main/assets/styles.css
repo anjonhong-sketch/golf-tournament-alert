@@ -43,3 +43,13 @@ a{color:#126b4b}
 .tabs button { padding-inline: 5px; }
 .actions { flex-wrap: wrap; }
 [hidden] { display: none !important; }
+
+/* 2026 refreshed filter design */
+.toolbar{border-radius:22px;padding:18px}
+#search{border-radius:14px;padding:14px}
+.filters select{background:#086a47;color:#fff;border:0;border-radius:14px;font-weight:700;padding:14px 8px}
+.tabs{gap:8px;margin:15px 0}
+.tabs button{min-height:74px;border-radius:15px;background:#dcece1;color:#145b40;font-size:14px;line-height:1.4}
+.tabs button.active{background:#e6e6e6;color:#13563d}
+#scope{background:#086a47;color:#fff;border:0;font-weight:700;border-radius:12px}
+#refresh,#reset{border-radius:12px}
