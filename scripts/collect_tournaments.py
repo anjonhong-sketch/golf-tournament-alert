@@ -26,14 +26,29 @@ SOURCES = [
 SEARCH_URL = "https://api.search.brave.com/res/v1/web/search"
 NAVER_SEARCH_URL = "https://openapi.naver.com/v1/search"
 SEARCH_TERMS = [
-    "스크린대회", "스크린 대회", "스크린골프 대회 참가",
-    "아마추어 골프대회 참가 신청",
+    "스크린골프 대회", "스크린대회", "스크린 대회", "스크린골프 대회 참가",
+    "아마추어 골프대회", "아마추어 골프대회 참가 신청", "생활체육 골프대회",
+    "필드 골프대회", "골프 챔피언십", "골프 토너먼트", "골프 오픈대회",
+    "골프 친선대회", "골프 클럽 챔피언십", "골프 인비테이셔널",
+    "골프 매장대회", "골프 동호회 대회", "여성 골프대회", "주니어 골프대회",
+    "시니어 골프대회", "타이틀리스트 골프대회", "팀 타이틀리스트 챔피언십",
+    "골프존 대회", "프렌즈스크린 대회", "SG골프 대회",
+    "KPGA 대회", "KLPGA 대회", "대한골프협회 대회", "미드아마추어 골프대회",
+    "파크골프 대회", "파크골프 챔피언십",
 ]
-LOCAL_TERMS = ["천안 스크린대회", "천안 스크린 대회", "천안 매장대회", "천안 아마추어 골프대회"]
-EVENT = re.compile(r"팔도페스티벌|스크린\s*대회|매장\s*대회|골프.{0,32}(?:대회|챔피언십)|대항전|아마추어.{0,32}(?:대회|클래식|챔피언십)")
-EXCLUDED = re.compile(r"파크\s*골프|결과\s*발표|생중계|대회\s*후기|\bW?GTOUR\b", re.IGNORECASE)
+LOCAL_TERMS = [
+    "천안 스크린대회", "천안 스크린 대회", "천안 매장대회",
+    "천안 아마추어 골프대회", "충남 골프대회", "대전 골프대회",
+]
+EVENT = re.compile(
+    r"팔도페스티벌|스크린\\s*대회|매장\\s*대회|"
+    r"(?:골프|파크골프|타이틀리스트|KPGA|KLPGA|GTOUR).{0,40}"
+    r"(?:대회|챔피언십|인비테이셔널|토너먼트|클래식|오픈|컵|페스티벌)|"
+    r"(?:대회|챔피언십|인비테이셔널|토너먼트|클래식|오픈|컵).{0,40}(?:골프|파크골프)|"
+    r"아마추어.{0,32}(?:대회|클래식|챔피언십)|대항전"
+)
+EXCLUDED = re.compile(r"결과\\s*발표|생중계|대회\\s*후기", re.IGNORECASE)
 UNKNOWN = "미확인"
-
 
 class Links(HTMLParser):
     def __init__(self):
@@ -167,7 +182,7 @@ def web_candidates(api_key, today):
     matches = []
     for term in SEARCH_TERMS:
         query = urlencode({"q": f"{today.year} {term}", "country": "KR",
-                           "search_lang": "ko", "count": 15, "freshness": "py"})
+                           "search_lang": "ko", "count": 15})
         content = json.loads(fetch(SEARCH_URL + "?" + query, {"X-Subscription-Token": api_key}))
         matches.extend(search_results("웹 검색", content.get("web", {}).get("results", []), "url"))
     return matches
