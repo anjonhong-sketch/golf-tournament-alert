@@ -203,11 +203,11 @@ def web_candidates(api_key, today):
 def naver_candidates(client_id, secret):
     headers = {"X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": secret}
     matches = []
-    for channel in ("blog", "cafearticle"):
+    for channel in ("blog", "cafearticle", "news"):
         for term in [*SEARCH_TERMS, *LOCAL_TERMS]:
-            query = urlencode({"query": term if term in LOCAL_TERMS else f"2026 {term}", "display": 15, "sort": "date"})
+            query = urlencode({"query": term if term in LOCAL_TERMS else f"2026 {term}", "display": 30, "sort": "date"})
             response = json.loads(fetch(f"{NAVER_SEARCH_URL}/{channel}.json?{query}", headers))
-            matches.extend(search_results("네이버 블로그·카페", response.get("items", []), "link"))
+            matches.extend(search_results("네이버 블로그·카페·뉴스", response.get("items", []), "link"))
     return matches
 
 
@@ -319,7 +319,7 @@ def collect(previous, now, offline=False):
     naver_secret = os.getenv("NAVER_SEARCH_CLIENT_SECRET")
     skip_naver = ("오프라인 실행" if offline else "검색 키 미설정" if not (naver_id and naver_secret)
                   else "다음 검색 실행 대기" if os.getenv("RUN_WEB_SEARCH", "true") != "true" else None)
-    check("네이버 블로그·카페", NAVER_SEARCH_URL,
+    check("네이버 블로그·카페·뉴스", NAVER_SEARCH_URL,
           lambda: naver_candidates(naver_id, naver_secret), skip_naver)
     automatic = {}
     known_titles = {title_key(event["title"]) for event in verified}
