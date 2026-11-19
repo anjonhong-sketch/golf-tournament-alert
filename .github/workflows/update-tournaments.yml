@@ -32,6 +32,26 @@ jobs:
           BRAVE_SEARCH_API_KEY: ${{ secrets.BRAVE_SEARCH_API_KEY }}
           RUN_WEB_SEARCH: ${{ github.event_name == 'workflow_dispatch' || github.event.schedule == '17 0 * * *' }}
         run: python scripts/collect_tournaments.py
+      - name: Publish coverage audit report
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          feed = Path("data/tournaments.json")
+          if feed.exists():
+              data = json.loads(feed.read_text(encoding="utf-8"))
+              Path("coverage-audit.json").write_text(
+                  json.dumps(data.get("coverage_audit", {"error": "audit unavailable"}), ensure_ascii=False, indent=2),
+                  encoding="utf-8")
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: tournament-coverage-audit
+          path: coverage-audit.json
+          if-no-files-found: warn
+          retention-days: 30
       - name: Commit updated JSON
         run: |
           git config user.name "github-actions[bot]"
