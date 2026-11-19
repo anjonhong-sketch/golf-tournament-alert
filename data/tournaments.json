@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T07:11:06.371Z",
+  "updated_at": "2026-11-19T07:14:30.555Z",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -329,6 +329,23 @@
       "event_status": "진행 중"
     },
     {
+      "id": "kga-2026-national-sports-107",
+      "provider": "대한골프협회",
+      "title": "제107회 전국체육대회 골프부경기(국내부)",
+      "category": "아마추어 필드골프",
+      "region": "제주 골프존카운티 오라",
+      "start_date": "2026-10-19",
+      "end_date": "2026-10-22",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://result.sports.or.kr/GO/INF001.do",
+      "result_url": "https://www.kgagolf.or.kr/load/web/kgaRanking/tourList",
+      "result_summary": "남자 박준영, 여자 김규빈·강서연",
+      "event_status": "종료"
+    },
+    {
       "id": "daejeon-central-screen-2026",
       "provider": "대전광역시골프협회",
       "title": "2026년 중부권 스크린 골프대회",
@@ -344,6 +361,23 @@
       "discovery_url": "https://m.joongdo.co.kr/view.php?key=20261110010003456",
       "event_status": "종료",
       "registration_status": "접수 마감"
+    },
+    {
+      "id": "kga-2026-kb-19",
+      "provider": "대한골프협회",
+      "title": "제19회 KB금융그룹배 여자아마추어골프선수권대회",
+      "category": "아마추어 필드골프",
+      "region": "강원 센추리21 CC",
+      "start_date": "2026-09-30",
+      "end_date": "2026-10-02",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://result.sports.or.kr/GO/INF001.do",
+      "result_url": "https://www.kgagolf.or.kr/load/web/kgaRanking/tourList",
+      "result_summary": "여자 우승 안윤주",
+      "event_status": "종료"
     },
     {
       "id": "sg-daejeon-lucky-2026-10",
@@ -362,6 +396,23 @@
       "event_status": "종료"
     },
     {
+      "id": "kga-2026-dreampark-7",
+      "provider": "대한골프협회",
+      "title": "제7회 드림파크배 아마추어골프선수권대회",
+      "category": "아마추어 필드골프",
+      "region": "인천 드림파크",
+      "start_date": "2026-09-15",
+      "end_date": "2026-09-18",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://result.sports.or.kr/GO/INF001.do",
+      "result_url": "https://www.kgagolf.or.kr/load/web/kgaRanking/tourList",
+      "result_summary": "남자 우승 유민혁, 여자 우승 임수민",
+      "event_status": "종료"
+    },
+    {
       "id": "sg-daejeon-oullim-45",
       "provider": "어울림 SG스크린골프",
       "title": "제45회 어울림 SG스크린골프 매장대회",
@@ -375,6 +426,23 @@
       "eligibility": "참가 자격 미확인. 매장 문의 042-527-8848.",
       "registration_status": "접수 마감",
       "verification": "official_schedule",
+      "event_status": "종료"
+    },
+    {
+      "id": "kga-2026-hur-72",
+      "provider": "대한골프협회",
+      "title": "허정구배 제72회 한국아마추어골프선수권대회",
+      "category": "아마추어 필드골프",
+      "region": "경기 남서울 CC",
+      "start_date": "2026-09-08",
+      "end_date": "2026-09-11",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://result.sports.or.kr/GO/INF001.do",
+      "result_url": "https://www.kgagolf.or.kr/load/web/kgaRanking/tourList",
+      "result_summary": "남자 우승 손제이",
       "event_status": "종료"
     },
     {
@@ -408,6 +476,23 @@
       "eligibility": "지원 기종에서 로그인 후 대회 번호 1306814 검색.",
       "event_status": "종료",
       "verification": "organizer_verified"
+    },
+    {
+      "id": "kga-2026-kang-50",
+      "provider": "대한골프협회",
+      "title": "강민구배 제50회 한국여자아마추어골프선수권대회",
+      "category": "아마추어 필드골프",
+      "region": "대전 유성 CC",
+      "start_date": "2026-09-01",
+      "end_date": "2026-09-04",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://result.sports.or.kr/GO/INF001.do",
+      "result_url": "https://www.kgagolf.or.kr/load/web/kgaRanking/tourList",
+      "result_summary": "여자 우승 김규빈",
+      "event_status": "종료"
     },
     {
       "id": "kga-2026-mcst-14",
