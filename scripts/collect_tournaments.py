@@ -277,6 +277,35 @@ def deduplicate(verified, candidates):
     return list(candidates_by_url.values()), duplicate_count
 
 
+def audit_coverage(verified, candidates, checks):
+    """Report discoverable gaps without pretending they are verified events."""
+    categories = {
+        "지역·지자체": r"시장배|군수배|도지사배|구청장배|체육회장배|협회장배",
+        "직장인·기업": r"직장인|기업|회사원|DB증권",
+        "브랜드": r"스릭슨|타이틀리스트|브리지스톤|캘러웨이|젝시오|테일러메이드|핑",
+        "미드아마추어": r"미드아마|KMAGF|호연배|벤제프|프랭크버거",
+        "주니어": r"주니어|초등|중등|학생",
+    }
+    groups = {}
+    for label, pattern in categories.items():
+        groups[label] = {
+            "registered": sum(bool(re.search(pattern, e["title"], re.I)) for e in verified),
+            "unverified_leads": sum(bool(re.search(pattern, e["title"], re.I)) for e in candidates),
+        }
+    return {
+        "scope": "검색된 자료와 등록 목록 비교. 전국 대회 전체 대비 누락률이 아닙니다.",
+        "registered": len(verified),
+        "unverified_leads": len(candidates),
+        "failed_sources": [c["provider"] for c in checks if c.get("ok") is False],
+        "skipped_sources": [c["provider"] for c in checks if c.get("ok") is None],
+        "by_group": groups,
+        "review_queue": [
+            {"title": e["title"], "discovery_url": e.get("discovery_url"), "provider": e["provider"]}
+            for e in candidates[:100]
+        ],
+    }
+
+
 def collect(previous, now, offline=False):
     today = now.astimezone(KST).date()
     verified = [event_status(event, today) for event in json.loads(VERIFIED.read_text(encoding="utf-8"))]
@@ -350,6 +379,7 @@ def collect(previous, now, offline=False):
         "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
         "sources": checks, "tournaments": verified, "candidates": candidates,
         "duplicates_suppressed": duplicate_count,
+        "coverage_audit": audit_coverage(verified, candidates, checks),
     }
 
 
