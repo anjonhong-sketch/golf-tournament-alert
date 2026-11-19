@@ -206,8 +206,11 @@ def naver_candidates(client_id, secret):
     for channel in ("blog", "cafearticle", "news"):
         for term in [*SEARCH_TERMS, *LOCAL_TERMS]:
             query = urlencode({"query": term if term in LOCAL_TERMS else f"2026 {term}", "display": 30, "sort": "date"})
-            response = json.loads(fetch(f"{NAVER_SEARCH_URL}/{channel}.json?{query}", headers))
-            matches.extend(search_results("네이버 블로그·카페·뉴스", response.get("items", []), "originallink" if channel == "news" else "link"))
+            try:
+                response = json.loads(fetch(f"{NAVER_SEARCH_URL}/{channel}.json?{query}", headers))
+                matches.extend(search_results("네이버 블로그·카페·뉴스", response.get("items", []), "originallink" if channel == "news" else "link"))
+            except (OSError, ValueError, KeyError, TypeError):
+                continue
     return matches
 
 
