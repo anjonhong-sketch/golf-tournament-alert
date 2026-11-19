@@ -94,7 +94,7 @@ function render() {
     const entries = [...custom, ...feed.tournaments.map(normalize), ...(feed.candidates || []).map(normalize)];
     const items = entries.filter(item => {
         const ended = item.eventStatus === '종료' || (item.custom && storedStatus(item.status) === '접수 마감');
-        const inScope = scope === 'candidate' ? item.candidate
+        const inScope = query ? true : scope === 'candidate' ? item.candidate
             : !item.candidate && (scope === 'archive' ? ended : !ended);
         const matchRegion = !region || item.region?.startsWith('전국') ||
             (areas[region] || [region]).some(area => item.region?.startsWith(area));
