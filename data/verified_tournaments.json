@@ -626,7 +626,7 @@
     "provider": "한국미드아마추어골프연맹",
     "title": "2026 프랭크버거배 미드아마 클래식",
     "category": "아마추어 필드골프",
-    "region": "강원 횡성 벨라45CC",
+    "region": "전북 정읍 내장산CC",
     "start_date": "2026-09-30",
     "end_date": "2026-10-01",
     "entry_fee": null,
@@ -634,9 +634,7 @@
     "registration_status": "접수 마감",
     "verification": "official_schedule",
     "official_url": "https://www.kmagf.co.kr/tour/schedule",
-    "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
-    "registration_start": "2026-09-11",
-    "registration_end": "2026-09-18"
+    "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요."
   },
   {
     "id": "kmagf-2026-atitaya",
@@ -656,7 +654,7 @@
   {
     "id": "kmagf-2026-chammaru",
     "provider": "한국미드아마추어골프연맹",
-    "title": "참마루건설배 제17회 KMAGF 챔피언십",
+    "title": "제17회 KMAGF 미드아마 챔피언십",
     "category": "아마추어 필드골프",
     "region": "경북 경주신라CC",
     "start_date": "2026-10-27",
@@ -666,9 +664,7 @@
     "registration_status": "접수 마감",
     "verification": "official_schedule",
     "official_url": "https://www.kmagf.co.kr/tour/schedule",
-    "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
-    "registration_start": "2026-10-12",
-    "registration_end": "2026-10-23"
+    "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요."
   },
   {
     "id": "kmagf-2026-nhmatch",
