@@ -219,6 +219,7 @@ public final class MainActivity extends Activity {
         if ("signup".equals(url.getHost())) { showAccount(true); return; }
         if ("login".equals(url.getHost())) { showAccount(false); return; }
         if ("manage".equals(url.getHost())) { showManage(); return; }
+        if ("admin".equals(url.getHost())) { showAdmin(); return; }
         if (!"room".equals(url.getHost()) || feed == null || url.getPathSegments().size() != 2) return;
         String kind = url.getPathSegments().get(0);
         String id = url.getPathSegments().get(1);
@@ -394,7 +395,7 @@ public final class MainActivity extends Activity {
             if (!register) {
                 auth.signInWithEmailAndPassword(mail, pass).addOnCompleteListener(this, task -> {
                     submit.setEnabled(true);
-                    if (task.isSuccessful()) { toast("로그인했습니다."); showList(null); }
+                    if (task.isSuccessful()) { toast("로그인했습니다."); showManage(); }
                     else toast("로그인 실패: 이메일 또는 비밀번호를 확인하세요.");
                 });
                 return;
@@ -429,6 +430,7 @@ public final class MainActivity extends Activity {
         String uid = FirebaseAuth.getInstance().getUid();
         if (uid == null) { showAccount(false); return; }
         newPage("내 대회 관리");
+        button(page, "관리자 승인 화면", this::showAdmin);
         button(page, "대회 목록으로", () -> showList(null));
         label(page, "주최자 승인 상태를 확인하는 중…", 16, false);
         FirebaseFirestore.getInstance().collection("users").document(uid).get()
@@ -436,11 +438,93 @@ public final class MainActivity extends Activity {
                 if (doc.exists() && "organizer".equals(doc.getString("role"))
                         && "approved".equals(doc.getString("approval"))) {
                     label(page, "주최자 승인 완료", 18, true);
-                    label(page, "대회 등록·편집은 다음 업데이트에서 연결됩니다.", 15, false);
+                    button(page, "새 대회 등록", () -> showEventEditor(null, "", false));
+                    LinearLayout events = scroll(page);
+                    FirebaseFirestore.getInstance().collection("organizerEvents")
+                        .whereEqualTo("ownerUid", uid).get()
+                        .addOnSuccessListener(this, results -> {
+                            for (DocumentSnapshot event : results) {
+                                String name = event.getString("title");
+                                label(events, name, 17, true);
+                                button(events, "수정", () -> showEventEditor(event.getId(), name,
+                                    Boolean.TRUE.equals(event.getBoolean("published"))));
+                            }
+                        }).addOnFailureListener(this, e -> label(events, "내 대회 목록을 불러오지 못했습니다.", 15, false));
                 } else {
                     label(page, "관리자 승인 전에는 대회를 등록하거나 편집할 수 없습니다.", 16, false);
                 }
             }).addOnFailureListener(this, error -> toast("승인 상태를 확인할 수 없습니다."));
+    }
+
+
+    private void showAdmin() {
+        if (!firebaseReady()) return;
+        String uid = FirebaseAuth.getInstance().getUid();
+        if (uid == null) { showAccount(false); return; }
+        newPage("주최자 승인 관리");
+        button(page, "대회 목록으로", () -> showList(null));
+        LinearLayout entries = scroll(page);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("admins").document(uid).get().addOnCompleteListener(this, admin -> {
+            if (!admin.isSuccessful() || admin.getResult() == null || !admin.getResult().exists()) {
+                label(entries, "관리자 권한이 없습니다.", 16, false);
+                return;
+            }
+            db.collection("users").whereEqualTo("role", "organizer").get()
+                .addOnSuccessListener(this, users -> {
+                    entries.removeAllViews();
+                    if (users.isEmpty()) label(entries, "주최자 신청 내역이 없습니다.", 16, false);
+                    for (DocumentSnapshot user : users) {
+                        String approval = user.getString("approval");
+                        label(entries, user.getString("name") + " · " + user.getString("email"), 17, true);
+                        label(entries, "상태: " + approval, 14, false);
+                        if ("pending".equals(approval)) {
+                            button(entries, "승인", () -> updateApproval(user.getId(), "approved"));
+                            button(entries, "거절", () -> updateApproval(user.getId(), "rejected"));
+                        }
+                    }
+                }).addOnFailureListener(this, e -> label(entries, "신청 목록을 불러오지 못했습니다.", 16, false));
+        });
+    }
+
+    private void updateApproval(String uid, String status) {
+        FirebaseFirestore.getInstance().collection("users").document(uid)
+            .update("approval", status)
+            .addOnSuccessListener(this, unused -> { toast("처리했습니다."); showAdmin(); })
+            .addOnFailureListener(this, e -> toast("승인 변경 실패"));
+    }
+
+    private void showEventEditor(String eventId, String previousTitle, boolean previousPublished) {
+        newPage(eventId == null ? "대회 등록" : "대회 수정");
+        button(page, "내 대회 관리", this::showManage);
+        EditText title = new EditText(this);
+        title.setHint("대회명");
+        title.setText(previousTitle);
+        page.addView(title);
+        android.widget.CheckBox published = new android.widget.CheckBox(this);
+        published.setText("대회 공개");
+        published.setChecked(previousPublished);
+        page.addView(published);
+        button(page, "저장", () -> {
+            String name = title.getText().toString().trim();
+            String uid = FirebaseAuth.getInstance().getUid();
+            if (uid == null || name.isEmpty() || name.length() > 120) {
+                toast("대회명을 1~120자로 입력하세요."); return;
+            }
+            Map<String,Object> data = new HashMap<>();
+            data.put("title", name);
+            data.put("published", published.isChecked());
+            var ref = FirebaseFirestore.getInstance().collection("organizerEvents");
+            if (eventId == null) {
+                data.put("ownerUid", uid);
+                ref.add(data).addOnSuccessListener(this, d -> { toast("대회를 등록했습니다."); showManage(); })
+                    .addOnFailureListener(this, e -> toast("등록 실패: 권한을 확인하세요."));
+            } else {
+                ref.document(eventId).update(data).addOnSuccessListener(this, v -> {
+                    toast("수정했습니다."); showManage();
+                }).addOnFailureListener(this, e -> toast("수정 실패: 권한을 확인하세요."));
+            }
+        });
     }
 
     private static String value(JSONObject object, String key) {
