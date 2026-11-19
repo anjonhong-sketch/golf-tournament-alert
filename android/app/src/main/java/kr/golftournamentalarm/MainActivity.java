@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.ArrayAdapter;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -214,6 +216,9 @@ public final class MainActivity extends Activity {
             refreshList();
             return;
         }
+        if ("signup".equals(url.getHost())) { showAccount(true); return; }
+        if ("login".equals(url.getHost())) { showAccount(false); return; }
+        if ("manage".equals(url.getHost())) { showManage(); return; }
         if (!"room".equals(url.getHost()) || feed == null || url.getPathSegments().size() != 2) return;
         String kind = url.getPathSegments().get(0);
         String id = url.getPathSegments().get(1);
@@ -342,6 +347,95 @@ public final class MainActivity extends Activity {
                         else toast("글을 등록하지 못했습니다.");
                     });
         });
+    }
+
+
+    private boolean firebaseReady() {
+        if (FirebaseApp.getApps(this).isEmpty()) {
+            toast("회원가입 서버 연결 전입니다. Firebase 설정이 필요합니다.");
+            return false;
+        }
+        return true;
+    }
+
+    private void showAccount(boolean register) {
+        if (!firebaseReady()) return;
+        newPage(register ? "회원가입" : "로그인");
+        button(page, "대회 목록으로", () -> showList(null));
+        LinearLayout content = scroll(page);
+        EditText name = new EditText(this);
+        if (register) { name.setHint("이름 또는 단체명"); content.addView(name); }
+        EditText email = new EditText(this);
+        email.setHint("이메일");
+        email.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        content.addView(email);
+        EditText password = new EditText(this);
+        password.setHint("비밀번호 (6자 이상)");
+        password.setInputType(android.text.InputType.TYPE_CLASS_TEXT | android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        content.addView(password);
+        Spinner role = new Spinner(this);
+        if (register) {
+            role.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,
+                    new String[]{"일반 고객", "대회 주최자 (관리자 승인 필요)"}));
+            content.addView(role);
+        }
+        Button submit = button(content, register ? "가입 신청" : "로그인", () -> {});
+        submit.setOnClickListener(v -> {
+            String mail = email.getText().toString().trim();
+            String pass = password.getText().toString();
+            if (mail.isEmpty() || pass.length() < 6) { toast("이메일과 6자 이상 비밀번호를 입력하세요."); return; }
+            submit.setEnabled(false);
+            FirebaseAuth auth = FirebaseAuth.getInstance();
+            if (!register) {
+                auth.signInWithEmailAndPassword(mail, pass).addOnCompleteListener(this, task -> {
+                    submit.setEnabled(true);
+                    if (task.isSuccessful()) { toast("로그인했습니다."); showList(null); }
+                    else toast("로그인 실패: 이메일 또는 비밀번호를 확인하세요.");
+                });
+                return;
+            }
+            boolean organizer = role.getSelectedItemPosition() == 1;
+            auth.createUserWithEmailAndPassword(mail, pass).addOnCompleteListener(this, task -> {
+                if (!task.isSuccessful() || auth.getUid() == null) {
+                    submit.setEnabled(true); toast("가입에 실패했습니다. 이메일 중복 또는 연결 상태를 확인하세요."); return;
+                }
+                Map<String,Object> profile = new HashMap<>();
+                profile.put("email", mail);
+                profile.put("name", name.getText().toString().trim());
+                profile.put("role", organizer ? "organizer" : "customer");
+                profile.put("approval", organizer ? "pending" : "not_required");
+                profile.put("createdAt", FieldValue.serverTimestamp());
+                FirebaseFirestore.getInstance().collection("users").document(auth.getUid())
+                    .set(profile).addOnCompleteListener(this, saved -> {
+                        submit.setEnabled(true);
+                        if (saved.isSuccessful()) {
+                            toast(organizer ? "주최자 승인 신청이 접수되었습니다." : "회원가입이 완료되었습니다.");
+                            showList(null);
+                        } else {
+                            toast("계정은 생성되었지만 가입정보 저장에 실패했습니다. 관리자에게 문의하세요.");
+                        }
+                    });
+            });
+        });
+    }
+
+    private void showManage() {
+        if (!firebaseReady()) return;
+        String uid = FirebaseAuth.getInstance().getUid();
+        if (uid == null) { showAccount(false); return; }
+        newPage("내 대회 관리");
+        button(page, "대회 목록으로", () -> showList(null));
+        label(page, "주최자 승인 상태를 확인하는 중…", 16, false);
+        FirebaseFirestore.getInstance().collection("users").document(uid).get()
+            .addOnSuccessListener(this, doc -> {
+                if (doc.exists() && "organizer".equals(doc.getString("role"))
+                        && "approved".equals(doc.getString("approval"))) {
+                    label(page, "주최자 승인 완료", 18, true);
+                    label(page, "대회 등록·편집은 다음 업데이트에서 연결됩니다.", 15, false);
+                } else {
+                    label(page, "관리자 승인 전에는 대회를 등록하거나 편집할 수 없습니다.", 16, false);
+                }
+            }).addOnFailureListener(this, error -> toast("승인 상태를 확인할 수 없습니다."));
     }
 
     private static String value(JSONObject object, String key) {
