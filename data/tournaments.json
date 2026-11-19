@@ -127,6 +127,22 @@
       "verification": "organizer_verified"
     },
     {
+      "id": "kmagf-2026-nhmatch",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "NH올원뱅크 2026 KMAGF 매치플레이 챔피언십",
+      "category": "아마추어 필드골프",
+      "region": "태국 칸차나부리 아티타야",
+      "start_date": "2026-11-10",
+      "end_date": "2026-11-13",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
+      "event_status": "종료"
+    },
+    {
       "id": "sg-daejeon-daeyoung-2026-11",
       "provider": "대영스크린골프",
       "title": "대영스크린 11월 매장대회",
@@ -313,6 +329,22 @@
       "verification": "organizer_verified"
     },
     {
+      "id": "kmagf-2026-chammaru",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "참마루건설배 제17회 KMAGF 챔피언십",
+      "category": "아마추어 필드골프",
+      "region": "경북 경주신라CC",
+      "start_date": "2026-10-27",
+      "end_date": "2026-10-28",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
+      "event_status": "종료"
+    },
+    {
       "id": "sg-daejeon-lucky-2026-11",
       "provider": "럭키스크린",
       "title": "럭키스크린 11월 골프투어 친목대회",
@@ -343,6 +375,22 @@
       "official_url": "https://result.sports.or.kr/GO/INF001.do",
       "result_url": "https://www.kgagolf.or.kr/load/web/kgaRanking/tourList",
       "result_summary": "남자 박준영, 여자 김규빈·강서연",
+      "event_status": "종료"
+    },
+    {
+      "id": "kmagf-2026-atitaya",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "제3회 아티타야배 레이디스 미드아마 챔피언십",
+      "category": "아마추어 필드골프",
+      "region": "충북 중원GC",
+      "start_date": "2026-10-13",
+      "end_date": "2026-10-14",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
       "event_status": "종료"
     },
     {
@@ -377,6 +425,22 @@
       "official_url": "https://result.sports.or.kr/GO/INF001.do",
       "result_url": "https://www.kgagolf.or.kr/load/web/kgaRanking/tourList",
       "result_summary": "여자 우승 안윤주",
+      "event_status": "종료"
+    },
+    {
+      "id": "kmagf-2026-frankburger",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "2026 프랭크버거배 미드아마 클래식",
+      "category": "아마추어 필드골프",
+      "region": "강원 벨라45CC",
+      "start_date": "2026-09-30",
+      "end_date": "2026-10-01",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
       "event_status": "종료"
     },
     {
@@ -446,6 +510,22 @@
       "event_status": "종료"
     },
     {
+      "id": "kmagf-2026-senior",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "비조이엔지 제1회 한국시니어미드아마챔피언십",
+      "category": "아마추어 필드골프",
+      "region": "경기 블루원 용인CC",
+      "start_date": "2026-09-07",
+      "end_date": "2026-09-07",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
+      "event_status": "종료"
+    },
+    {
       "id": "sg-daejeon-daeyoung-2026-autumn",
       "provider": "대영스크린골프",
       "title": "대영스크린 가을맞이 매장대회",
@@ -495,6 +575,22 @@
       "event_status": "종료"
     },
     {
+      "id": "kmagf-2026-bridgestone",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "제13회 브리지스톤골프배 미드아마 최강전",
+      "category": "아마추어 필드골프",
+      "region": "강원 벨라45CC",
+      "start_date": "2026-09-01",
+      "end_date": "2026-09-02",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
+      "event_status": "종료"
+    },
+    {
       "id": "kga-2026-mcst-14",
       "provider": "대한골프협회",
       "title": "제14회 문화체육관광부장관배 생활체육 전국골프대회",
@@ -538,6 +634,38 @@
       "event_status": "종료"
     },
     {
+      "id": "kmagf-2026-busanmbc",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "국제식품배 제24회 부산MBC 전국아마추어골프선수권대회",
+      "category": "아마추어 필드골프",
+      "region": "부산 동부산CC",
+      "start_date": "2026-08-25",
+      "end_date": "2026-08-26",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
+      "event_status": "종료"
+    },
+    {
+      "id": "kmagf-2026-benjefe",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "2026 벤제프 클럽챔피언십",
+      "category": "아마추어 필드골프",
+      "region": "충북 천룡CC (결승)",
+      "start_date": "2026-07-06",
+      "end_date": "2026-09-21",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
+      "event_status": "종료"
+    },
+    {
       "id": "rainbowhills-2026-episode-2",
       "provider": "레인보우힐스 컨트리클럽",
       "title": "레인보우힐스 드림챌린지 2026 Episode 2",
@@ -575,6 +703,38 @@
       "event_status": "종료"
     },
     {
+      "id": "kmagf-2026-hoengseong",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "제5회 횡성8대명품배 전국아마추어골프대회",
+      "category": "아마추어 필드골프",
+      "region": "강원 횡성 벨라45CC",
+      "start_date": "2026-06-29",
+      "end_date": "2026-06-30",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
+      "event_status": "종료"
+    },
+    {
+      "id": "kmagf-2026-gmax",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "2026 지맥스 SWING FOR HOPE 아마추어 챔피언십",
+      "category": "아마추어 필드골프",
+      "region": "부산 해운대CC",
+      "start_date": "2026-06-10",
+      "end_date": "2026-06-11",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
+      "event_status": "종료"
+    },
+    {
       "id": "dbsec-2026-employee-championship",
       "provider": "DB증권 / SBS골프",
       "title": "2026 제2회 DB증권 직장인 골프챔피언십",
@@ -589,6 +749,38 @@
       "official_url": "https://programs.sbs.co.kr/sbsgolf/dbsecgolf2/main",
       "eligibility": "50인 이상 법인 소속 임직원 2인 1팀, 144개 팀 모집. 결과·방송 클립은 SBS골프에서 확인.",
       "result_summary": "우승팀 및 최종 순위 미확인. SBS골프에서 대회 방송·클립 확인 가능.",
+      "event_status": "종료"
+    },
+    {
+      "id": "kmagf-2026-hoyeon",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "제8회 호연배 아마추어골프 최강전",
+      "category": "아마추어 필드골프",
+      "region": "경북 김천 김천포도CC",
+      "start_date": "2026-05-07",
+      "end_date": "2026-05-08",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
+      "event_status": "종료"
+    },
+    {
+      "id": "kmagf-2026-hampyeong",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "2026 함평사랑 전국아마추어골프대회",
+      "category": "아마추어 필드골프",
+      "region": "전남 함평 베르힐CC",
+      "start_date": "2026-04-28",
+      "end_date": "2026-04-29",
+      "entry_fee": null,
+      "amateur_eligible": null,
+      "registration_status": "접수 마감",
+      "verification": "official_schedule",
+      "official_url": "https://www.kmagf.co.kr/tour/list",
+      "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
       "event_status": "종료"
     },
     {
