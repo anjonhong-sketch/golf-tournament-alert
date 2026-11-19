@@ -1,53 +1,54 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T00:57:59.302180+00:00",
+  "updated_at": "2026-11-19T00:58:24.722312+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
       "provider": "프렌즈스크린",
       "source_url": "https://www.friendsscreen.kr/main/kakao-intro",
-      "ok": null,
-      "detail": "오프라인 실행",
+      "ok": true,
+      "cached": false,
       "candidate_count": 0,
       "schedule_count": 0
     },
     {
       "provider": "골프존",
       "source_url": "https://news.golfzon.com/ko/",
-      "ok": null,
-      "detail": "오프라인 실행",
+      "ok": true,
+      "cached": false,
       "candidate_count": 0,
       "schedule_count": 0
     },
     {
       "provider": "SG골프",
       "source_url": "https://screen.sggolf.com/store/cupList",
-      "ok": null,
-      "detail": "오프라인 실행",
+      "ok": false,
+      "cached": false,
+      "error": "HTTPError",
       "candidate_count": 0,
       "schedule_count": 0
     },
     {
       "provider": "대한골프협회",
       "source_url": "https://kgagolf.or.kr/web/life/schedule",
-      "ok": null,
-      "detail": "오프라인 실행",
+      "ok": true,
+      "cached": false,
       "candidate_count": 0,
       "schedule_count": 0
     },
     {
       "provider": "한국미드아마추어골프연맹",
       "source_url": "https://www.kmagf.co.kr/tour/list",
-      "ok": null,
-      "detail": "오프라인 실행",
-      "candidate_count": 0,
+      "ok": true,
+      "cached": false,
+      "candidate_count": 16,
       "schedule_count": 0
     },
     {
       "provider": "웹 검색",
       "source_url": "https://api.search.brave.com/res/v1/web/search",
       "ok": null,
-      "detail": "오프라인 실행",
+      "detail": "검색 키 미설정",
       "candidate_count": 0,
       "schedule_count": 0
     }
@@ -147,6 +148,67 @@
       "verification": "organizer_verified"
     }
   ],
-  "candidates": [],
-  "duplicates_suppressed": 0
+  "candidates": [
+    {
+      "id": "f8bc1c98de4fd5d320160d16",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "2026 함평사랑 전국아마추어골프대회 [남성선수권부,단체전]",
+      "official_url": "https://www.kmagf.co.kr/tour/about/SUoLmxP54l3bRMSwsu9FNQ==",
+      "category": "아마추어 필드골프",
+      "region": "미확인",
+      "entry_fee": null,
+      "start_date": null,
+      "end_date": null,
+      "event_status": "미확인",
+      "registration_status": "미확인",
+      "amateur_eligible": null,
+      "verification": "candidate_link_only"
+    },
+    {
+      "id": "8e4ed4cec81298b0ea0c6953",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "2026 지맥스 SWING FOR HOPE 아마추어 챔피언십 with 사랑의 열매 [남성선수권부, 단체전]",
+      "official_url": "https://www.kmagf.co.kr/tour/about/k8j-_UJJyhvTym31ePWKhQ==",
+      "category": "아마추어 필드골프",
+      "region": "미확인",
+      "entry_fee": null,
+      "start_date": null,
+      "end_date": null,
+      "event_status": "미확인",
+      "registration_status": "미확인",
+      "amateur_eligible": null,
+      "verification": "candidate_link_only"
+    },
+    {
+      "id": "bf4f1f88cfc9dfc9fc98662a",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "제5회 횡성8대명품배 전국아마추어골프대회 [남성선수권부, 단체전]",
+      "official_url": "https://www.kmagf.co.kr/tour/about/KyAr6ted546tbW1veiSAgA==",
+      "category": "아마추어 필드골프",
+      "region": "미확인",
+      "entry_fee": null,
+      "start_date": null,
+      "end_date": null,
+      "event_status": "미확인",
+      "registration_status": "미확인",
+      "amateur_eligible": null,
+      "verification": "candidate_link_only"
+    },
+    {
+      "id": "f80d6f97b8706f8d5232e36b",
+      "provider": "한국미드아마추어골프연맹",
+      "title": "(주)국제식품배 제24회 부산MBC 전국아마추어골프선수권대회 [남성선수권부]",
+      "official_url": "https://www.kmagf.co.kr/tour/about/dS71v41CooO25vK06yZHVg==",
+      "category": "아마추어 필드골프",
+      "region": "미확인",
+      "entry_fee": null,
+      "start_date": null,
+      "end_date": null,
+      "event_status": "미확인",
+      "registration_status": "미확인",
+      "amateur_eligible": null,
+      "verification": "candidate_link_only"
+    }
+  ],
+  "duplicates_suppressed": 12
 }
