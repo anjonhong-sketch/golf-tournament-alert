@@ -7,6 +7,10 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.text.InputFilter;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -48,11 +52,12 @@ public final class MainActivity extends Activity {
     private final ExecutorService network = Executors.newSingleThreadExecutor();
     private JSONObject feed;
     private LinearLayout page;
+    private WebView tournamentList;
+    private boolean listReady;
+    private String listMessage;
     private ListenerRegistration listener;
     private int screen;
     private boolean roomOpen;
-    private boolean archive;
-    private boolean candidates;
     private boolean refreshing;
 
     @Override
@@ -65,6 +70,7 @@ public final class MainActivity extends Activity {
         } catch (Exception ignored) {
             // An empty or outdated cache can be replaced by the next refresh.
         }
+        createTournamentList();
         showList(feed == null ? "대회 정보를 불러오는 중…" : "저장된 대회 정보");
         refresh();
     }
@@ -100,15 +106,17 @@ public final class MainActivity extends Activity {
                     refreshing = false;
                     feed = latest;
                     getPreferences(0).edit().putString("feed", json).apply();
-                    if (!roomOpen) showList(null);
+                    listMessage = null;
+                    updateList();
                 });
             } catch (Exception error) {
                 runOnUiThread(() -> {
                     if (isDestroyed()) return;
                     refreshing = false;
-                    if (!roomOpen) showList(feed == null
+                    listMessage = feed == null
                             ? "대회 정보를 불러오지 못했습니다. 새로고침을 눌러 다시 시도하세요."
-                            : "새로고침 실패 · 저장된 대회 정보");
+                            : "새로고침 실패 · 저장된 대회 정보";
+                    updateList();
                 });
             }
         });
@@ -125,62 +133,77 @@ public final class MainActivity extends Activity {
         return output.toByteArray();
     }
 
-    private void showList(String message) {
-        roomOpen = false;
-        newPage("골프대회 알리미");
-        button(page, "새로고침", () -> {
-            showList("대회 정보를 불러오는 중…");
-            refresh();
-        });
-        button(page, archive ? "진행·예정 대회 보기" : "종료된 대회 보기", () -> {
-            archive = !archive;
-            candidates = false;
-            showList(message);
-        });
-        button(page, candidates ? "대회 목록 보기" : "검토 중인 후보 보기", () -> {
-            candidates = !candidates;
-            showList(message);
-        });
-        if (candidates) label(page, "참가 가능 여부와 세부 정보 확인이 필요한 검색 결과입니다.", 14, false);
-        if (message != null) label(page, message, 15, false);
-        LinearLayout cards = scroll(page);
-        JSONArray list = feed == null ? null : feed.optJSONArray(candidates ? "candidates" : "tournaments");
-        if (list == null) list = new JSONArray();
-        int count = 0;
-        for (int index = 0; index < list.length(); index++) {
-            JSONObject event = list.optJSONObject(index);
-            if (event == null || (!candidates && "종료".equals(value(event, "event_status")) != archive)) continue;
-            count++;
-            label(cards, value(event, "title"), 21, true);
-            label(cards, value(event, "category") + " · " + value(event, "event_status"), 15, false);
-            String start = value(event, "start_date");
-            String end = value(event, "end_date");
-            label(cards, "일정  " + (start.equals(end) ? start : start + " ~ " + end)
-                    + "\n지역  " + value(event, "region")
-                    + "\n참가비  " + value(event, "entry_fee")
-                    + "\n접수  " + value(event, "registration_status")
-                    + "\n참가 조건  " + value(event, "eligibility"), 16, false);
-            String original = value(event, "official_url");
-            String url = UNKNOWN.equals(original) ? value(event, "discovery_url") : original;
-            if ("https".equals(Uri.parse(url).getScheme())) {
-                button(cards, candidates ? "후보 출처" : "대회 원문", () -> {
+    private void createTournamentList() {
+        tournamentList = new WebView(this);
+        tournamentList.getSettings().setJavaScriptEnabled(true);
+        tournamentList.getSettings().setDomStorageEnabled(true);
+        tournamentList.getSettings().setAllowFileAccess(false);
+        tournamentList.getSettings().setAllowContentAccess(false);
+        tournamentList.setWebChromeClient(new WebChromeClient());
+        tournamentList.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (!request.isForMainFrame()) return true;
+                Uri url = request.getUrl();
+                if ("golf-alert".equals(url.getScheme())) handleListAction(url);
+                else if ("https".equals(url.getScheme())) {
                     try {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-                    } catch (ActivityNotFoundException error) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, url));
+                    } catch (ActivityNotFoundException ignored) {
                         toast("원문을 열 수 있는 브라우저가 없습니다.");
                     }
-                });
+                }
+                return true;
             }
-            String id = value(event, "id");
-            if (!candidates && id.matches("[a-z0-9-]{1,80}")) {
-                LinearLayout actions = new LinearLayout(this);
-                actions.setOrientation(LinearLayout.HORIZONTAL);
-                cards.addView(actions);
-                button(actions, "대회 채팅", () -> showRoom(event, "chat"));
-                button(actions, "참가 후기", () -> showRoom(event, "reviews"));
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                listReady = true;
+                updateList();
+            }
+        });
+        tournamentList.loadUrl("file:///android_asset/index.html");
+    }
+
+    private void handleListAction(Uri url) {
+        if ("refresh".equals(url.getHost())) {
+            listMessage = "대회 정보를 불러오는 중…";
+            updateList();
+            refresh();
+            return;
+        }
+        if (!"room".equals(url.getHost()) || feed == null || url.getPathSegments().size() != 2) return;
+        String kind = url.getPathSegments().get(0);
+        String id = url.getPathSegments().get(1);
+        if (!("chat".equals(kind) || "reviews".equals(kind)) || !id.matches("[a-z0-9-]{1,80}")) return;
+        JSONArray entries = feed.optJSONArray("tournaments");
+        for (int index = 0; entries != null && index < entries.length(); index++) {
+            JSONObject event = entries.optJSONObject(index);
+            if (event != null && id.equals(event.optString("id"))) {
+                showRoom(event, kind);
+                return;
             }
         }
-        if (count == 0 && feed != null) label(cards, "표시할 대회가 없습니다.", 16, false);
+    }
+
+    private void updateList() {
+        if (!listReady || roomOpen) return;
+        String data = feed == null ? "null" : javascriptString(feed.toString());
+        tournamentList.evaluateJavascript("showFeed(JSON.parse(" + data + "), "
+                + javascriptString(listMessage) + ")", null);
+    }
+
+    private static String javascriptString(String value) {
+        return (value == null ? "null" : JSONObject.quote(value)).replace("\u2028", "\\u2028").replace("\u2029", "\\u2029");
+    }
+
+    private void showList(String message) {
+        roomOpen = false;
+        closeListener();
+        if (message != null) listMessage = message;
+        setContentView(tournamentList);
+        applyInsets(tournamentList, 0, 0, 0, 0);
+        updateList();
     }
 
     private void showRoom(JSONObject event, String kind) {
@@ -291,18 +314,22 @@ public final class MainActivity extends Activity {
         page.setOrientation(LinearLayout.VERTICAL);
         page.setPadding(dp(16), dp(8), dp(16), dp(12));
         page.setBackgroundColor(Color.rgb(246, 250, 247));
+        applyInsets(page, dp(16), dp(8), dp(16), dp(12));
+        setContentView(page);
+        label(page, title, 26, true).setTextColor(GREEN);
+    }
+
+    private static void applyInsets(android.view.View target, int left, int top, int right, int bottom) {
         if (android.os.Build.VERSION.SDK_INT >= 35) {
-            page.setOnApplyWindowInsetsListener((view, insets) -> {
+            target.setOnApplyWindowInsetsListener((view, insets) -> {
                 var bars = insets.getInsets(android.view.WindowInsets.Type.systemBars()
                         | android.view.WindowInsets.Type.displayCutout()
                         | android.view.WindowInsets.Type.ime());
-                view.setPadding(dp(16) + bars.left, dp(8) + bars.top,
-                        dp(16) + bars.right, dp(12) + bars.bottom);
+                view.setPadding(left + bars.left, top + bars.top, right + bars.right, bottom + bars.bottom);
                 return insets;
             });
+            target.requestApplyInsets();
         }
-        setContentView(page);
-        label(page, title, 26, true).setTextColor(GREEN);
     }
 
     private LinearLayout scroll(LinearLayout parent) {
@@ -360,6 +387,8 @@ public final class MainActivity extends Activity {
     protected void onDestroy() {
         closeListener();
         network.shutdownNow();
+        if (tournamentList.getParent() instanceof ViewGroup parent) parent.removeView(tournamentList);
+        tournamentList.destroy();
         super.onDestroy();
     }
 }

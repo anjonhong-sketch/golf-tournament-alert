@@ -4,7 +4,7 @@
 
 ## 대회 데이터
 
-앱은 시작 시와 새로고침 시 [공개 JSON](https://raw.githubusercontent.com/anjonhong-sketch/golf-tournament-alert/main/data/tournaments.json)을 읽습니다. 연결에 실패하면 기기에 보관한 마지막 목록을 표시합니다.
+앱은 시작 시와 새로고침 시 [공개 JSON](https://raw.githubusercontent.com/anjonhong-sketch/golf-tournament-alert/main/data/tournaments.json)을 읽습니다. 연결에 실패하면 기기에 보관한 마지막 목록을 표시합니다. 첫 버전의 검색, 필터, 즐겨찾기, 직접 등록 구성을 사용하며 직접 등록한 대회는 기기에 저장합니다.
 
 - `tournaments`에는 주최 측 자료를 확인한 대회와 프렌즈스크린·SG골프 공식 목록에서 일정이 추출된 대회가 들어갑니다. `official_schedule`이면 일정 외에 참가 자격과 참가비 등은 미확인일 수 있습니다. 확인된 대회는 `data/verified_tournaments.json`에서 관리합니다.
 - `candidates`에는 추가 확인이 필요한 링크가 들어갑니다. 웹 검색 링크는 `discovery_url`에 넣으며 주최 측 원문이 확인되지 않으면 `official_url`은 `null`입니다. 자격과 참가비 등 확인하지 못한 값은 `null` 또는 미확인으로 표시합니다.
@@ -25,7 +25,7 @@ python scripts/collect_tournaments.py --offline
 
 Android Studio에서 `android/`를 열고 JDK 17, Android SDK 36, Gradle 8.11.1로 빌드합니다. **Test collector and build Android**의 성공한 실행에서 테스트용 APK를 받을 수 있습니다. 커뮤니티 연결 설정 없이도 대회 목록과 원문을 이용할 수 있습니다.
 
-실시간 채팅과 참가 후기를 활성화하려면 Firebase 프로젝트에 Android 패키지 `kr.golftournamentalarm`을 등록하고, **익명 인증**과 **Cloud Firestore**를 사용하도록 설정합니다. 받은 `google-services.json`을 `android/app/`에 두고 다음 명령으로 이 저장소의 Firestore 규칙을 프로젝트에 적용한 다음 APK를 다시 빌드합니다.
+실시간 채팅과 참가 후기를 활성화하려면 Firebase 프로젝트에 Android 패키지 `com.golf.tournamentalert`을 등록하고, **익명 인증**과 **Cloud Firestore**를 사용하도록 설정합니다. 받은 `google-services.json`을 `android/app/`에 두고 다음 명령으로 이 저장소의 Firestore 규칙을 프로젝트에 적용한 다음 APK를 다시 빌드합니다.
 
 ```sh
 firebase deploy --only firestore:rules --project YOUR_PROJECT_ID

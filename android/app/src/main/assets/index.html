@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0d4635">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src file: 'self'; style-src file: 'self' 'unsafe-inline'; frame-src 'none'; object-src 'none'">
+<title>골프대회 알리미</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+<div style="max-width:760px;margin:auto">
+<h1>⛳ 골프대회 알리미</h1>
+<div class="sub">전국 스크린골프 · 아마추어 필드골프 대회 모아보기</div>
+</div>
+</header>
+<main>
+<div class="banner" id="feed-status" role="status">대회 정보를 불러오는 중…</div>
+<div class="toolbar">
+<input aria-label="대회 검색" id="search" type="search" placeholder="대회명 · 장소 · 주최기관 검색">
+<div class="filters">
+<select aria-label="지역" id="region">
+<option value="">전국 모든 지역</option>
+<option>서울</option>
+<option>경기</option>
+<option>인천</option>
+<option>충청</option>
+<option>대전</option>
+<option>세종</option>
+<option>강원</option>
+<option>전라</option>
+<option>광주</option>
+<option>경상</option>
+<option>부산</option>
+<option>대구</option>
+<option>울산</option>
+<option>제주</option>
+<option>전국</option>
+<option>해외</option>
+</select>
+<select aria-label="접수 상태" id="status">
+<option value="">모든 접수 상태</option>
+<option>접수 중</option>
+<option>접수 예정</option>
+<option>접수 마감</option>
+<option>매장 참여</option>
+<option>참여 예정</option>
+<option>미확인</option>
+</select>
+</div>
+<div class="tabs">
+<button class="active" data-type="all">전체</button>
+<button data-type="screen">스크린</button>
+<button data-type="field">필드</button>
+<button data-type="fav">★ 즐겨찾기</button>
+</div>
+<div class="row">
+<select aria-label="대회 상태" id="scope">
+<option value="current">진행·예정</option>
+<option value="archive">종료</option>
+<option value="candidate">검토 후보</option>
+</select>
+<button id="refresh" class="alt">새로고침</button>
+</div>
+<div class="row summary-row">
+<span id="count" class="count">
+</span>
+<button id="reset" class="alt" style="font-size:12px;padding:8px">필터 초기화</button>
+</div>
+</div>
+<section id="cards" class="cards">
+</section>
+<div class="panel">
+<details>
+<summary>＋ 대회 직접 등록하기</summary>
+<p class="note">공식 사이트에서 확인한 대회를 내 기기에 추가합니다. 등록 내용은 현재 브라우저에만 저장됩니다.</p>
+<form id="add">
+<label>대회명 *</label>
+<input name="name" required maxlength="120">
+<label>구분</label>
+<select name="type">
+<option value="screen">스크린골프</option>
+<option value="field">필드골프</option>
+</select>
+<label>지역</label>
+<select name="region">
+<option>전국</option>
+<option>서울</option>
+<option>경기</option>
+<option>인천</option>
+<option>충청</option>
+<option>대전</option>
+<option>세종</option>
+<option>강원</option>
+<option>전라</option>
+<option>경상</option>
+<option>부산</option>
+<option>제주</option>
+<option>해외</option>
+</select>
+<label>장소</label>
+<input name="venue" maxlength="120">
+<label>대회 일정 (예: 2026-12-05)</label>
+<input name="dates" maxlength="100">
+<label>참가비</label>
+<input name="fee" placeholder="확인 필요" maxlength="50">
+<label>접수 상태</label>
+<select name="status">
+<option>확인필요</option>
+<option>접수중</option>
+<option>접수예정</option>
+<option>접수마감</option>
+</select>
+<label>공식 링크 (https://)</label>
+<input name="url" type="url" required placeholder="https://...">
+<p>
+<button type="submit" style="width:100%">내 대회 목록에 추가</button>
+</p>
+</form>
+</details>
+</div>
+<div class="panel">
+<h2>공식 대회 정보 바로가기</h2>
+<p>
+<a rel="noopener" href="https://m.gtour.com/notices/273?important=1">골프존 GTOUR 공식 공지</a>
+</p>
+<p>
+<a rel="noopener" href="https://www.kmagf.co.kr/tour/list">한국미드아마추어골프연맹 대회</a>
+</p>
+<p>
+<a rel="noopener" href="https://result.sports.or.kr/GO/INF001.do">대한골프협회 대회정보</a>
+</p>
+<p>
+<a rel="noopener" href="https://www.pinline.co.kr/tournaments">PINLINE 아마추어 대회 모음</a>
+</p>
+</div>
+<div class="footer">골프대회 알리미</div>
+</main><script src="tournaments.js"></script>
+</body>
+</html>
