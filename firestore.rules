@@ -37,7 +37,7 @@ service cloud.firestore {
         && request.resource.data.published is bool;
       allow update: if (approvedOrganizer() && resource.data.ownerUid == request.auth.uid
         && request.resource.data.ownerUid == resource.data.ownerUid) || isAdmin();
-      allow delete: if isAdmin();
+      allow delete: if isAdmin() || (approvedOrganizer() && resource.data.ownerUid == request.auth.uid);
     }
     match /tournaments/{eventId}/{kind}/{postId} {
       function knownRoom() {
