@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T07:23:04.000339+00:00",
+  "updated_at": "2026-11-19T07:29:43.424745+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -731,5 +731,81 @@
       "verification": "candidate_link_only"
     }
   ],
-  "duplicates_suppressed": 13
+  "duplicates_suppressed": 13,
+  "coverage_audit": {
+    "scope": "검색된 자료와 등록 목록 비교. 전국 대회 전체 대비 누락률이 아닙니다.",
+    "registered": 32,
+    "unverified_leads": 8,
+    "failed_sources": [
+      "SG골프"
+    ],
+    "skipped_sources": [
+      "웹 검색",
+      "네이버 블로그·카페·뉴스"
+    ],
+    "by_group": {
+      "지역·지자체": {
+        "registered": 3,
+        "unverified_leads": 0
+      },
+      "직장인·기업": {
+        "registered": 1,
+        "unverified_leads": 0
+      },
+      "브랜드": {
+        "registered": 4,
+        "unverified_leads": 0
+      },
+      "미드아마추어": {
+        "registered": 0,
+        "unverified_leads": 0
+      },
+      "주니어": {
+        "registered": 0,
+        "unverified_leads": 0
+      }
+    },
+    "review_queue": [
+      {
+        "title": "골프존 차이나 오픈",
+        "discovery_url": null,
+        "provider": "골프존"
+      },
+      {
+        "title": "골프존, ‘2026 롯데렌터카 WGTOUR’ 7차 대회 성료.. 박단유, 최종라운드 11언더파 맹타로 통산 9승 달성!",
+        "discovery_url": null,
+        "provider": "골프존"
+      },
+      {
+        "title": "골프존, ‘2026 신한투자증권 GTOUR’ 7차 대회 마무리.. 최민욱, 통산 16승으로 김홍택과 역대 최다승 타이!",
+        "discovery_url": null,
+        "provider": "골프존"
+      },
+      {
+        "title": "골프존, 팔도페스티벌 시즌2 ‘PAR에서 홀인원까지, 칠 때마다 쌓이는 팔도상금’ 개최",
+        "discovery_url": null,
+        "provider": "골프존"
+      },
+      {
+        "title": "2026 함평사랑 전국아마추어골프대회 [남성선수권부,단체전]",
+        "discovery_url": null,
+        "provider": "한국미드아마추어골프연맹"
+      },
+      {
+        "title": "2026 지맥스 SWING FOR HOPE 아마추어 챔피언십 with 사랑의 열매 [남성선수권부, 단체전]",
+        "discovery_url": null,
+        "provider": "한국미드아마추어골프연맹"
+      },
+      {
+        "title": "제5회 횡성8대명품배 전국아마추어골프대회 [남성선수권부, 단체전]",
+        "discovery_url": null,
+        "provider": "한국미드아마추어골프연맹"
+      },
+      {
+        "title": "(주)국제식품배 제24회 부산MBC 전국아마추어골프선수권대회 [남성선수권부]",
+        "discovery_url": null,
+        "provider": "한국미드아마추어골프연맹"
+      }
+    ]
+  }
 }
