@@ -508,7 +508,8 @@
     "registration_status": "접수 마감",
     "verification": "official_schedule",
     "official_url": "https://www.kmagf.co.kr/tour/schedule",
-    "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요."
+    "result_summary": "개인전 우승 허지백 (KMAGF 공식 미디어)",
+    "result_url": "https://www.kmagf.co.kr/tour/schedule"
   },
   {
     "id": "kmagf-2026-hoyeon",
@@ -523,12 +524,13 @@
     "registration_status": "접수 마감",
     "verification": "official_schedule",
     "official_url": "https://www.kmagf.co.kr/tour/schedule",
-    "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요."
+    "result_summary": "우승 박상목 (KMAGF 공식 미디어)",
+    "result_url": "https://www.kmagf.co.kr/tour/schedule"
   },
   {
     "id": "kmagf-2026-gmax",
     "provider": "한국미드아마추어골프연맹",
-    "title": "2026 지맥스 SWING FOR HOPE 아마추어 챔피언십",
+    "title": "2026 지맥스 SWING FOR HOPE 아마추어 챔피언십 with 사랑의 열매",
     "category": "아마추어 필드골프",
     "region": "부산 해운대CC",
     "start_date": "2026-06-10",
@@ -538,7 +540,8 @@
     "registration_status": "접수 마감",
     "verification": "official_schedule",
     "official_url": "https://www.kmagf.co.kr/tour/schedule",
-    "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요."
+    "result_summary": "우승 허지백 (KMAGF 공식 미디어)",
+    "result_url": "https://www.kmagf.co.kr/tour/schedule"
   },
   {
     "id": "kmagf-2026-hoengseong",
@@ -553,7 +556,8 @@
     "registration_status": "접수 마감",
     "verification": "official_schedule",
     "official_url": "https://www.kmagf.co.kr/tour/schedule",
-    "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요."
+    "result_summary": "개인전 우승 정동혁, 단체전 우승 베티나르디 (박재순·정동혁·허찬구)",
+    "result_url": "https://www.kmagf.co.kr/tour/schedule"
   },
   {
     "id": "kmagf-2026-benjefe",
@@ -561,14 +565,16 @@
     "title": "2026 벤제프 클럽챔피언십",
     "category": "아마추어 필드골프",
     "region": "충북 천룡CC (결승)",
-    "start_date": "2026-07-06",
+    "start_date": "2026-06-15",
     "end_date": "2026-09-21",
     "entry_fee": null,
     "amateur_eligible": null,
     "registration_status": "접수 마감",
     "verification": "official_schedule",
     "official_url": "https://www.kmagf.co.kr/tour/schedule",
-    "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요."
+    "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
+    "registration_start": "2026-05-22",
+    "registration_end": "2026-06-14"
   },
   {
     "id": "kmagf-2026-busanmbc",
@@ -620,7 +626,7 @@
     "provider": "한국미드아마추어골프연맹",
     "title": "2026 프랭크버거배 미드아마 클래식",
     "category": "아마추어 필드골프",
-    "region": "강원 벨라45CC",
+    "region": "전북 정읍 내장산CC",
     "start_date": "2026-09-30",
     "end_date": "2026-10-01",
     "entry_fee": null,
@@ -648,7 +654,7 @@
   {
     "id": "kmagf-2026-chammaru",
     "provider": "한국미드아마추어골프연맹",
-    "title": "참마루건설배 제17회 KMAGF 챔피언십",
+    "title": "제17회 KMAGF 미드아마 챔피언십",
     "category": "아마추어 필드골프",
     "region": "경북 경주신라CC",
     "start_date": "2026-10-27",
@@ -674,5 +680,20 @@
     "verification": "official_schedule",
     "official_url": "https://www.kmagf.co.kr/tour/schedule",
     "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요."
+  },
+  {
+    "id": "kmagf-2026-benjefe-finals",
+    "provider": "한국미드아마추어골프연맹",
+    "title": "2026 벤제프 클럽챔피언십 본선",
+    "category": "아마추어 필드골프",
+    "region": "충북 천룡CC",
+    "start_date": "2026-07-06",
+    "end_date": "2026-09-21",
+    "entry_fee": null,
+    "amateur_eligible": null,
+    "registration_status": "접수 마감",
+    "verification": "official_schedule",
+    "official_url": "https://www.kmagf.co.kr/tour/schedule",
+    "result_summary": "공식 본선 결과 미확인"
   }
 ]
