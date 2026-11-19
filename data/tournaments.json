@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T07:47:38.269307+00:00",
+  "updated_at": "2026-11-19T07:52:16.468609+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -342,9 +342,9 @@
       "verification": "official_schedule",
       "official_url": "https://www.kmagf.co.kr/tour/schedule",
       "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
-      "event_status": "종료",
       "registration_start": "2026-10-12",
-      "registration_end": "2026-10-23"
+      "registration_end": "2026-10-23",
+      "event_status": "종료"
     },
     {
       "id": "sg-daejeon-lucky-2026-11",
@@ -443,9 +443,9 @@
       "verification": "official_schedule",
       "official_url": "https://www.kmagf.co.kr/tour/schedule",
       "result_summary": "공식 결과 상세 미확인. 연맹 홈페이지에서 확인 필요.",
-      "event_status": "종료",
       "registration_start": "2026-09-11",
-      "registration_end": "2026-09-18"
+      "registration_end": "2026-09-18",
+      "event_status": "종료"
     },
     {
       "id": "sg-daejeon-lucky-2026-10",
@@ -1215,6 +1215,162 @@
         "title": "골프존, 팔도페스티벌 시즌2 ‘PAR에서 홀인원까지, 칠 때마다 쌓이는 팔도상금’ 개최",
         "discovery_url": null,
         "provider": "골프존"
+      }
+    ],
+    "official_changes_to_review": [
+      {
+        "id": "kmagf-2026-nhmatch",
+        "title": "NH올원뱅크 2026 KMAGF 매치플레이 챔피언십",
+        "field": "event_dates",
+        "registered": [
+          "2026-11-10",
+          "2026-11-13"
+        ],
+        "official": [
+          "2026-11-03",
+          "2026-11-05"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
+      },
+      {
+        "id": "kmagf-2026-chammaru",
+        "title": "참마루건설배 제17회 KMAGF 챔피언십",
+        "field": "event_dates",
+        "registered": [
+          "2026-10-27",
+          "2026-10-28"
+        ],
+        "official": [
+          "2026-10-12",
+          "2026-10-23"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
+      },
+      {
+        "id": "kmagf-2026-atitaya",
+        "title": "제3회 아티타야배 레이디스 미드아마 챔피언십",
+        "field": "event_dates",
+        "registered": [
+          "2026-10-13",
+          "2026-10-14"
+        ],
+        "official": [
+          "2026-09-18",
+          "2026-10-07"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
+      },
+      {
+        "id": "kmagf-2026-frankburger",
+        "title": "2026 프랭크버거배 미드아마 클래식",
+        "field": "event_dates",
+        "registered": [
+          "2026-09-30",
+          "2026-10-01"
+        ],
+        "official": [
+          "2026-09-11",
+          "2026-09-18"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
+      },
+      {
+        "id": "kmagf-2026-senior",
+        "title": "비조이엔지 제1회 한국시니어미드아마챔피언십",
+        "field": "event_dates",
+        "registered": [
+          "2026-09-07",
+          "2026-09-07"
+        ],
+        "official": [
+          "2026-08-14",
+          "2026-08-21"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
+      },
+      {
+        "id": "kmagf-2026-bridgestone",
+        "title": "제13회 브리지스톤골프배 미드아마 최강전",
+        "field": "event_dates",
+        "registered": [
+          "2026-09-01",
+          "2026-09-02"
+        ],
+        "official": [
+          "2026-08-19",
+          "2026-08-26"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
+      },
+      {
+        "id": "kmagf-2026-busanmbc",
+        "title": "국제식품배 제24회 부산MBC 전국아마추어골프선수권대회",
+        "field": "event_dates",
+        "registered": [
+          "2026-08-25",
+          "2026-08-26"
+        ],
+        "official": [
+          "2026-08-07",
+          "2026-08-14"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
+      },
+      {
+        "id": "kmagf-2026-hoengseong",
+        "title": "제5회 횡성8대명품배 전국아마추어골프대회",
+        "field": "event_dates",
+        "registered": [
+          "2026-06-29",
+          "2026-06-30"
+        ],
+        "official": [
+          "2026-06-05",
+          "2026-06-12"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
+      },
+      {
+        "id": "kmagf-2026-benjefe",
+        "title": "2026 벤제프 클럽챔피언십",
+        "field": "event_dates",
+        "registered": [
+          "2026-06-15",
+          "2026-09-21"
+        ],
+        "official": [
+          "2026-07-06",
+          "2026-09-21"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
+      },
+      {
+        "id": "kmagf-2026-gmax",
+        "title": "2026 지맥스 SWING FOR HOPE 아마추어 챔피언십 with 사랑의 열매",
+        "field": "event_dates",
+        "registered": [
+          "2026-06-10",
+          "2026-06-11"
+        ],
+        "official": [
+          "2026-05-21",
+          "2026-05-28"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
+      },
+      {
+        "id": "kmagf-2026-hampyeong",
+        "title": "2026 함평사랑 전국아마추어골프대회",
+        "field": "event_dates",
+        "registered": [
+          "2026-04-28",
+          "2026-04-29"
+        ],
+        "official": [
+          "2026-04-09",
+          "2026-04-23"
+        ],
+        "source_url": "https://www.kmagf.co.kr/tour/schedule"
       }
     ]
   }
