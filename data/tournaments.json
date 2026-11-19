@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T07:29:43.424745+00:00",
+  "updated_at": "2026-11-19T07:30:51.331757+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -861,73 +861,13 @@
       "registration_status": "미확인",
       "amateur_eligible": null,
       "verification": "candidate_link_only"
-    },
-    {
-      "id": "f8bc1c98de4fd5d320160d16",
-      "provider": "한국미드아마추어골프연맹",
-      "title": "2026 함평사랑 전국아마추어골프대회 [남성선수권부,단체전]",
-      "official_url": "https://www.kmagf.co.kr/tour/about/SUoLmxP54l3bRMSwsu9FNQ==",
-      "category": "아마추어 필드골프",
-      "region": "미확인",
-      "entry_fee": null,
-      "start_date": null,
-      "end_date": null,
-      "event_status": "미확인",
-      "registration_status": "미확인",
-      "amateur_eligible": null,
-      "verification": "candidate_link_only"
-    },
-    {
-      "id": "8e4ed4cec81298b0ea0c6953",
-      "provider": "한국미드아마추어골프연맹",
-      "title": "2026 지맥스 SWING FOR HOPE 아마추어 챔피언십 with 사랑의 열매 [남성선수권부, 단체전]",
-      "official_url": "https://www.kmagf.co.kr/tour/about/k8j-_UJJyhvTym31ePWKhQ==",
-      "category": "아마추어 필드골프",
-      "region": "미확인",
-      "entry_fee": null,
-      "start_date": null,
-      "end_date": null,
-      "event_status": "미확인",
-      "registration_status": "미확인",
-      "amateur_eligible": null,
-      "verification": "candidate_link_only"
-    },
-    {
-      "id": "bf4f1f88cfc9dfc9fc98662a",
-      "provider": "한국미드아마추어골프연맹",
-      "title": "제5회 횡성8대명품배 전국아마추어골프대회 [남성선수권부, 단체전]",
-      "official_url": "https://www.kmagf.co.kr/tour/about/KyAr6ted546tbW1veiSAgA==",
-      "category": "아마추어 필드골프",
-      "region": "미확인",
-      "entry_fee": null,
-      "start_date": null,
-      "end_date": null,
-      "event_status": "미확인",
-      "registration_status": "미확인",
-      "amateur_eligible": null,
-      "verification": "candidate_link_only"
-    },
-    {
-      "id": "f80d6f97b8706f8d5232e36b",
-      "provider": "한국미드아마추어골프연맹",
-      "title": "(주)국제식품배 제24회 부산MBC 전국아마추어골프선수권대회 [남성선수권부]",
-      "official_url": "https://www.kmagf.co.kr/tour/about/dS71v41CooO25vK06yZHVg==",
-      "category": "아마추어 필드골프",
-      "region": "미확인",
-      "entry_fee": null,
-      "start_date": null,
-      "end_date": null,
-      "event_status": "미확인",
-      "registration_status": "미확인",
-      "amateur_eligible": null,
-      "verification": "candidate_link_only"
     }
   ],
-  "duplicates_suppressed": 13,
+  "duplicates_suppressed": 17,
   "coverage_audit": {
     "scope": "검색된 자료와 등록 목록 비교. 전국 대회 전체 대비 누락률이 아닙니다.",
-    "registered": 32,
-    "unverified_leads": 8,
+    "registered": 44,
+    "unverified_leads": 4,
     "failed_sources": [
       "SG골프"
     ],
@@ -945,11 +885,11 @@
         "unverified_leads": 0
       },
       "브랜드": {
-        "registered": 4,
+        "registered": 5,
         "unverified_leads": 0
       },
       "미드아마추어": {
-        "registered": 0,
+        "registered": 8,
         "unverified_leads": 0
       },
       "주니어": {
@@ -977,26 +917,6 @@
         "title": "골프존, 팔도페스티벌 시즌2 ‘PAR에서 홀인원까지, 칠 때마다 쌓이는 팔도상금’ 개최",
         "discovery_url": null,
         "provider": "골프존"
-      },
-      {
-        "title": "2026 함평사랑 전국아마추어골프대회 [남성선수권부,단체전]",
-        "discovery_url": null,
-        "provider": "한국미드아마추어골프연맹"
-      },
-      {
-        "title": "2026 지맥스 SWING FOR HOPE 아마추어 챔피언십 with 사랑의 열매 [남성선수권부, 단체전]",
-        "discovery_url": null,
-        "provider": "한국미드아마추어골프연맹"
-      },
-      {
-        "title": "제5회 횡성8대명품배 전국아마추어골프대회 [남성선수권부, 단체전]",
-        "discovery_url": null,
-        "provider": "한국미드아마추어골프연맹"
-      },
-      {
-        "title": "(주)국제식품배 제24회 부산MBC 전국아마추어골프선수권대회 [남성선수권부]",
-        "discovery_url": null,
-        "provider": "한국미드아마추어골프연맹"
       }
     ]
   }
