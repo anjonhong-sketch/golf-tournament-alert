@@ -35,3 +35,11 @@ gradle --project-dir android assembleDebug
 ```
 
 채팅과 후기는 대회 고유 ID 단위로 분리됩니다. 다른 사용자는 익명 참가자로 표시되며 글 작성자는 자신의 글을 삭제할 수 있습니다. Firebase 프로젝트와 연결된 두 기기에서 같은 대회에 접속해 채팅 전송, 후기 등록, 본인 글 삭제를 확인할 수 있습니다.
+
+## 회원가입 및 주최자 승인 (개발 중)
+
+앱 상단 로그인/회원가입에서 이메일과 비밀번호로 일반 고객 또는 주최자를 선택합니다. 주최자는 Firestore `users/{uid}` 문서에 `role=organizer`, `approval=pending`으로 저장됩니다. 관리자 승인 전에는 관리 권한이 없습니다. 일반 고객은 `role=customer`, `approval=not_required`입니다.
+
+**필수 서버 설정:** Firebase 프로젝트에서 Email/Password 인증과 Cloud Firestore를 활성화하고 `android/app/google-services.json`을 안전하게 제공한 뒤 `firestore.rules`를 배포해야 합니다. Firebase 연결 전에는 회원가입이 동작하지 않습니다. Firestore `admins/{uid}` 문서는 Firebase Console 또는 Admin SDK로만 생성하고 일반 클라이언트에는 생성 권한을 주지 않습니다. 관리자는 해당 사용자 문서의 `approval`을 `approved` 또는 `rejected`로 변경할 수 있습니다.
+
+현재 가입/로그인/승인 상태 확인 화면과 보안 규칙을 구현했으며, **관리자 승인 UI, 주최자 대회 등록·편집 UI, 승인 대회 목록과 일반 검색의 통합은 아직 미구현**입니다. 실제 서비스 전 해당 기능과 보안 규칙 테스트가 필요합니다.
