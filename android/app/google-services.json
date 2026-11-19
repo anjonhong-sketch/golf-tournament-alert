@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "146777839198",
+    "project_id": "golf-17434",
+    "storage_bucket": "golf-17434.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:146777839198:android:c9ee3868818febf4d106cf",
+        "android_client_info": {
+          "package_name": "com.golf.tournamentalert"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbFUs8x_xYUSyfEkoLKJXld3ejekTXU20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
