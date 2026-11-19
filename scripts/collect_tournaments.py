@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Publish organizer-verified events and keep discovery results separate."""
 import hashlib
+import html
 import json
 import os
 import re
@@ -23,11 +24,13 @@ SOURCES = [
     ("한국미드아마추어골프연맹", "https://www.kmagf.co.kr/tour/list", "아마추어 필드골프"),
 ]
 SEARCH_URL = "https://api.search.brave.com/res/v1/web/search"
+NAVER_SEARCH_URL = "https://openapi.naver.com/v1/search"
 SEARCH_TERMS = [
-    "스크린골프 대회 참가 접수 골프존 프렌즈스크린 전국",
-    "아마추어 필드골프 골프대회 참가 신청 생활체육 전국 지역",
+    "스크린대회", "스크린 대회", "스크린골프 대회 참가",
+    "아마추어 골프대회 참가 신청",
 ]
-EVENT = re.compile(r"팔도페스티벌|골프.{0,32}(?:대회|챔피언십)|대항전|아마추어.{0,32}(?:대회|클래식|챔피언십)")
+LOCAL_TERMS = ["천안 스크린대회", "천안 스크린 대회", "천안 매장대회", "천안 아마추어 골프대회"]
+EVENT = re.compile(r"팔도페스티벌|스크린\s*대회|매장\s*대회|골프.{0,32}(?:대회|챔피언십)|대항전|아마추어.{0,32}(?:대회|클래식|챔피언십)")
 EXCLUDED = re.compile(r"파크\s*골프|결과\s*발표|생중계|대회\s*후기|\bW?GTOUR\b", re.IGNORECASE)
 UNKNOWN = "미확인"
 
@@ -166,16 +169,32 @@ def web_candidates(api_key, today):
         query = urlencode({"q": f"{today.year} {term}", "country": "KR",
                            "search_lang": "ko", "count": 15, "freshness": "py"})
         content = json.loads(fetch(SEARCH_URL + "?" + query, {"X-Subscription-Token": api_key}))
-        for item in content.get("web", {}).get("results", []):
-            title = item["title"]
-            url = canonical(item["url"])
-            if url and EVENT.search(title) and not EXCLUDED.search(title):
-                entry = candidate("웹 검색", title, url, UNKNOWN)
-                entry["discovery_url"] = entry.pop("official_url")
-                entry["official_url"] = None
-                matches.append(entry)
+        matches.extend(search_results("웹 검색", content.get("web", {}).get("results", []), "url"))
     return matches
 
+
+def naver_candidates(client_id, secret):
+    headers = {"X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": secret}
+    matches = []
+    for channel in ("blog", "cafearticle"):
+        for term in [*SEARCH_TERMS, *LOCAL_TERMS]:
+            query = urlencode({"query": term, "display": 15, "sort": "date"})
+            response = json.loads(fetch(f"{NAVER_SEARCH_URL}/{channel}.json?{query}", headers))
+            matches.extend(search_results("네이버 블로그·카페", response.get("items", []), "link"))
+    return matches
+
+
+def search_results(provider, results, url_key):
+    entries = []
+    for item in results:
+        title = html.unescape(re.sub(r"<[^>]+>", "", item["title"])).strip()
+        url = canonical(item[url_key])
+        if url and EVENT.search(title) and not EXCLUDED.search(title):
+            entry = candidate(provider, title, url, UNKNOWN)
+            entry["discovery_url"] = entry.pop("official_url")
+            entry["official_url"] = None
+            entries.append(entry)
+    return entries
 
 def event_status(event, today):
     start = date.fromisoformat(event["start_date"])
@@ -265,6 +284,12 @@ def collect(previous, now, offline=False):
     skip_search = ("오프라인 실행" if offline else "검색 키 미설정" if not api_key
                    else "다음 검색 실행 대기" if os.getenv("RUN_WEB_SEARCH", "true") != "true" else None)
     check("웹 검색", SEARCH_URL, lambda: web_candidates(api_key, today), skip_search)
+    naver_id = os.getenv("NAVER_SEARCH_CLIENT_ID")
+    naver_secret = os.getenv("NAVER_SEARCH_CLIENT_SECRET")
+    skip_naver = ("오프라인 실행" if offline else "검색 키 미설정" if not (naver_id and naver_secret)
+                  else "다음 검색 실행 대기" if os.getenv("RUN_WEB_SEARCH", "true") != "true" else None)
+    check("네이버 블로그·카페", NAVER_SEARCH_URL,
+          lambda: naver_candidates(naver_id, naver_secret), skip_naver)
     automatic = {}
     known_titles = {title_key(event["title"]) for event in verified}
     duplicate_schedules = 0

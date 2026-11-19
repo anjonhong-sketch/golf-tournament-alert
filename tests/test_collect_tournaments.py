@@ -70,6 +70,17 @@ class CollectorTests(unittest.TestCase):
         self.assertIn(item, feed["candidates"])
         self.assertGreaterEqual(len(feed["tournaments"]), 4)
 
+    def test_naver_searches_blog_and_cafe_with_local_variants(self):
+        payload = '{"items":[{"title":"<b>천안</b> 11월 스크린대회","link":"https://blog.naver.com/example/1"}]}'
+        with patch.object(collector, "fetch", return_value=payload) as fetch:
+            entries = collector.naver_candidates("client", "secret")
+        urls = [call.args[0] for call in fetch.call_args_list]
+        self.assertTrue(any("/blog.json?" in url for url in urls))
+        self.assertTrue(any("/cafearticle.json?" in url for url in urls))
+        self.assertIn("천안 스크린대회", [collector.parse_qsl(collector.urlsplit(url).query)[0][1] for url in urls])
+        self.assertEqual(entries[0]["title"], "천안 11월 스크린대회")
+        self.assertIsNone(entries[0]["official_url"])
+
     def test_web_results_do_not_claim_organizer_verification(self):
         results = '{"web":{"results":[{"title":"전국 아마추어 골프대회","url":"https://example.com/e"}]}}'
         with patch.object(collector, "fetch", return_value=results):

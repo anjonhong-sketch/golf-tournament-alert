@@ -148,5 +148,22 @@
     "amateur_eligible": true,
     "official_url": "https://dreamchallenge.rainbowhills.co.kr/tournament-guidelines/",
     "eligibility": "순수 아마추어 내장객 대상. 예선 7월 1일~9월 30일, 본선 11월 8일."
+  },
+  {
+    "id": "udr-cheonan-buldang-8920",
+    "title": "11월 UDR멤버스 천안불당점 스크린대회",
+    "provider": "UDR멤버스 천안불당점",
+    "category": "스크린골프",
+    "region": "충남 천안시 서북구 불당25로 244 코아루와이드시티 201호",
+    "start_date": "2026-11-10",
+    "end_date": "2026-11-30",
+    "entry_fee": "M쿠폰 사용 (원화 가격 미확인)",
+    "registration_status": "매장 참여",
+    "amateur_eligible": true,
+    "eligibility": "UDR멤버스 매장 회원 대상. 챔피언쉽에서 매장 스크린대회 선택. 11월 30일 오후 10시 종료.",
+    "official_url": "https://blog.naver.com/buldangudr/224470461068",
+    "source_urls": [
+      "https://www.okonms.co.kr/theongc_china/wc_use/c_use_outline.php?championship_idx=8920&home_show=1"
+    ]
   }
 ]
