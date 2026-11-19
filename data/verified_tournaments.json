@@ -472,5 +472,27 @@
     ],
     "eligibility": "천안시민 또는 천안 소재 직장인(일반부). 학생부는 천안 소재 학교 재학생이며 부모 중 1명 이상 천안 거주. 일반부 60팀, 학생부 5팀.",
     "result_summary": "대회 개최 확인. 공식 우승자·전체 순위표 미확인."
+  },
+  {
+    "id": "srixon-brave-2026",
+    "provider": "던롭스포츠코리아 / 스릭슨",
+    "title": "2026 스릭슨 브레이브 챔피언십",
+    "category": "아마추어 필드골프",
+    "region": "인천 연수구 잭니클라우스 골프클럽 코리아 (본선), 인천 클럽72 듄스 (예선)",
+    "start_date": "2026-08-28",
+    "end_date": "2026-09-14",
+    "entry_fee": null,
+    "registration_status": "접수 마감",
+    "amateur_eligible": true,
+    "verification": "reported_result",
+    "official_url": "https://www.youtube.com/watch?v=-DX6_vjx7oM",
+    "source_urls": [
+      "https://m.mk.co.kr/amp/12111878",
+      "https://mhnse.com/news/articleView.html?idxno=1543479",
+      "https://mhnse.com/news/articleView.html?idxno=1543459"
+    ],
+    "result_url": "https://mhnse.com/news/articleView.html?idxno=1543479",
+    "result_summary": "본선 우승 황승안 74타. 공동 4위 전승현·황석봉·우성호 79타.",
+    "eligibility": "2026-07-27~08-13 모집. 예선 8월 28~29일 클럽72 듄스, 본선 9월 14일 잭니클라우스 골프클럽 코리아."
   }
 ]
