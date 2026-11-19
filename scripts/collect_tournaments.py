@@ -277,6 +277,34 @@ def deduplicate(verified, candidates):
     return list(candidates_by_url.values()), duplicate_count
 
 
+def official_schedule_changes(verified, html_text):
+    """Compare published KMAGF regular-tour listings; never overwrite curated facts silently."""
+    parser = Links()
+    parser.feed(html_text)
+    visible = " ".join(parser.visible)
+    changes = []
+    # Match the displayed tournament title, then the venue and the two date ranges.
+    for event in verified:
+        if event.get("provider") != "한국미드아마추어골프연맹" or not event.get("id", "").startswith("kmagf-2026-"):
+            continue
+        title = event["title"]
+        # Official title sometimes includes division suffixes, but must begin with the curated title.
+        match = re.search(re.escape(title) + r".{0,160}?(\\d{4}\\.\\d{2}\\.\\d{2})", visible)
+        if not match:
+            continue  # An absent listing is not proof that a tournament was canceled.
+        fragment = visible[match.start():match.start()+250]
+        dates = re.findall(r"\\d{4}\\.\\d{2}\\.\\d{2}", fragment)
+        if len(dates) < 2:
+            continue
+        start, end = dates[-2].replace(".", "-"), dates[-1].replace(".", "-")
+        if start != event.get("start_date") or end != event.get("end_date"):
+            changes.append({"id": event["id"], "title": title, "field": "event_dates",
+                            "registered": [event.get("start_date"), event.get("end_date")],
+                            "official": [start, end],
+                            "source_url": "https://www.kmagf.co.kr/tour/schedule"})
+    return changes
+
+
 def audit_coverage(verified, candidates, checks):
     """Report discoverable gaps without pretending they are verified events."""
     categories = {
@@ -315,6 +343,12 @@ def collect(previous, now, offline=False):
     verified.sort(key=lambda event: event["start_date"] or "", reverse=True)
     checks = []
     results = []
+    official_changes = []
+    try:
+        if not offline:
+            official_changes = official_schedule_changes(verified, fetch("https://www.kmagf.co.kr/tour/schedule"))
+    except (OSError, ValueError, KeyError, TypeError):
+        checks.append({"provider": "KMAGF 일정 변경 감시", "source_url": "https://www.kmagf.co.kr/tour/schedule", "ok": False, "error": "ScheduleCheckFailed"})
     old = [*previous.get("candidates", []), *(
         event for event in previous.get("tournaments", [])
         if event["verification"] == "official_schedule" and event["id"] not in ids
@@ -379,7 +413,7 @@ def collect(previous, now, offline=False):
         "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
         "sources": checks, "tournaments": verified, "candidates": candidates,
         "duplicates_suppressed": duplicate_count,
-        "coverage_audit": audit_coverage(verified, candidates, checks),
+        "coverage_audit": {**audit_coverage(verified, candidates, checks), "official_changes_to_review": official_changes},
     }
 
 
