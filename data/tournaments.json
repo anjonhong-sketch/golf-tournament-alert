@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T07:14:30.555Z",
+  "updated_at": "2026-11-19T07:23:04.000339+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -16,7 +16,7 @@
       "source_url": "https://news.golfzon.com/ko/category/press-center/press-release/",
       "ok": true,
       "cached": false,
-      "candidate_count": 1,
+      "candidate_count": 5,
       "schedule_count": 0
     },
     {
@@ -53,7 +53,7 @@
       "schedule_count": 0
     },
     {
-      "provider": "네이버 블로그·카페",
+      "provider": "네이버 블로그·카페·뉴스",
       "source_url": "https://openapi.naver.com/v1/search",
       "ok": null,
       "detail": "검색 키 미설정",
@@ -588,6 +588,51 @@
   ],
   "candidates": [
     {
+      "id": "54f2c302a0d2633eb4920318",
+      "provider": "골프존",
+      "title": "골프존 차이나 오픈",
+      "official_url": "https://news.golfzon.com/ko?q=%EA%B3%A8%ED%94%84%EC%A1%B4+%EC%B0%A8%EC%9D%B4%EB%82%98+%EC%98%A4%ED%94%88",
+      "category": "스크린골프",
+      "region": "미확인",
+      "entry_fee": null,
+      "start_date": null,
+      "end_date": null,
+      "event_status": "미확인",
+      "registration_status": "미확인",
+      "amateur_eligible": null,
+      "verification": "candidate_link_only"
+    },
+    {
+      "id": "599e9efa8dde4d9a548af600",
+      "provider": "골프존",
+      "title": "골프존, ‘2026 롯데렌터카 WGTOUR’ 7차 대회 성료.. 박단유, 최종라운드 11언더파 맹타로 통산 9승 달성!",
+      "official_url": "https://news.golfzon.com/ko/%ea%b3%a8%ed%94%84%ec%a1%b4-2026-%eb%a1%af%eb%8d%b0%eb%a0%8c%ed%84%b0%ec%b9%b4-wgtour-7%ec%b0%a8-%eb%8c%80%ed%9a%8c-%ec%84%b1%eb%a3%8c-%eb%b0%95%eb%8b%a8%ec%9c%a0-%ec%b5%9c",
+      "category": "스크린골프",
+      "region": "미확인",
+      "entry_fee": null,
+      "start_date": null,
+      "end_date": null,
+      "event_status": "미확인",
+      "registration_status": "미확인",
+      "amateur_eligible": null,
+      "verification": "candidate_link_only"
+    },
+    {
+      "id": "1913ec3df81e2130fb608def",
+      "provider": "골프존",
+      "title": "골프존, ‘2026 신한투자증권 GTOUR’ 7차 대회 마무리.. 최민욱, 통산 16승으로 김홍택과 역대 최다승 타이!",
+      "official_url": "https://news.golfzon.com/ko/%ea%b3%a8%ed%94%84%ec%a1%b4-2026-%ec%8b%a0%ed%95%9c%ed%88%ac%ec%9e%90%ec%a6%9d%ea%b6%8c-gtour-7%ec%b0%a8-%eb%8c%80%ed%9a%8c-%eb%a7%88%eb%ac%b4%eb%a6%ac-%ec%b5%9c%eb%af%bc%ec%9a%b1",
+      "category": "스크린골프",
+      "region": "미확인",
+      "entry_fee": null,
+      "start_date": null,
+      "end_date": null,
+      "event_status": "미확인",
+      "registration_status": "미확인",
+      "amateur_eligible": null,
+      "verification": "candidate_link_only"
+    },
+    {
       "id": "2849bee122d20eefdd0427cd",
       "provider": "골프존",
       "title": "골프존, 팔도페스티벌 시즌2 ‘PAR에서 홀인원까지, 칠 때마다 쌓이는 팔도상금’ 개최",
@@ -663,5 +708,5 @@
       "verification": "candidate_link_only"
     }
   ],
-  "duplicates_suppressed": 12
+  "duplicates_suppressed": 13
 }
