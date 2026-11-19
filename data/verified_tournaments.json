@@ -452,5 +452,25 @@
     "official_url": "https://programs.sbs.co.kr/sbsgolf/dbsecgolf2/main",
     "eligibility": "50인 이상 법인 소속 임직원 2인 1팀, 144개 팀 모집. 결과·방송 클립은 SBS골프에서 확인.",
     "result_summary": "우승팀 및 최종 순위 미확인. SBS골프에서 대회 방송·클립 확인 가능."
+  },
+  {
+    "id": "cheonan-mayor-2026",
+    "provider": "천안시골프협회",
+    "title": "2026 천안시장배 및 골프협회장배 골프대회",
+    "category": "아마추어 필드골프",
+    "region": "충남 천안시 천안상록CC",
+    "start_date": "2026-06-30",
+    "end_date": "2026-06-30",
+    "entry_fee": "일반부 50,000원, 학생부 무료 (라운드 비용 별도)",
+    "registration_status": "접수 마감",
+    "amateur_eligible": true,
+    "verification": "organizer_verified",
+    "official_url": "https://casports.or.kr/golf/?board_name=golf&board_page=1&board_pid=18&list_type=list&mode=view&order_by=fn_user_name&order_type=asc&search_field=fn_title",
+    "source_urls": [
+      "https://www.benews.co.kr/news/511369",
+      "https://www.dealbada.com/bbs/board.php?bo_table=forum_golf&cmt_id=1330458&wr_id=1330382"
+    ],
+    "eligibility": "천안시민 또는 천안 소재 직장인(일반부). 학생부는 천안 소재 학교 재학생이며 부모 중 1명 이상 천안 거주. 일반부 60팀, 학생부 5팀.",
+    "result_summary": "대회 개최 확인. 공식 우승자·전체 순위표 미확인."
   }
 ]
