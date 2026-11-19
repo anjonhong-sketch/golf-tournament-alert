@@ -19,6 +19,13 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(ended["event_status"], "종료")
         self.assertEqual(ended["registration_status"], "접수 마감")
 
+    def test_ongoing_listing_does_not_invent_dates(self):
+        event = {"id": "ongoing", "schedule_type": "ongoing", "start_date": None, "end_date": None,
+                 "registration_status": "매장 참여"}
+        listing = collector.event_status(event, date(2026, 11, 19))
+        self.assertEqual(listing["event_status"], "상시 안내")
+        self.assertIsNone(listing["end_date"])
+
     def test_registration_window_separate_from_tournament(self):
         event = {"id": "example", "start_date": "2026-12-10", "end_date": "2026-12-11",
                  "registration_start": "2026-12-01", "registration_end": "2026-12-03"}

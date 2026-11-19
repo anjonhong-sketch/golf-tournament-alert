@@ -197,6 +197,9 @@ def search_results(provider, results, url_key):
     return entries
 
 def event_status(event, today):
+    if event.get("schedule_type") == "ongoing" and not event["start_date"] and not event["end_date"]:
+        return {**event, "event_status": "상시 안내",
+                "verification": event.get("verification", "organizer_verified")}
     start = date.fromisoformat(event["start_date"])
     end = date.fromisoformat(event["end_date"])
     if start > end:
@@ -223,7 +226,8 @@ def event_status(event, today):
 def deduplicate(verified, candidates):
     known_urls = {
         canonical(url) for event in verified
-        for url in [event["official_url"], *event.get("source_urls", [])]
+        for url in [event.get("official_url"), event.get("discovery_url"), *event.get("source_urls", [])]
+        if url
     }
     known_titles = [title_key(event["title"]) for event in verified]
     candidates_by_url = {}
@@ -246,7 +250,7 @@ def collect(previous, now, offline=False):
     ids = [event["id"] for event in verified]
     if len(ids) != len(set(ids)):
         raise ValueError("Duplicate verified event IDs")
-    verified.sort(key=lambda event: event["start_date"], reverse=True)
+    verified.sort(key=lambda event: event["start_date"] or "", reverse=True)
     checks = []
     results = []
     old = [*previous.get("candidates", []), *(
@@ -303,7 +307,7 @@ def collect(previous, now, offline=False):
             automatic[event["id"]] = event_status(event, today)
 
     verified.extend(automatic.values())
-    verified.sort(key=lambda event: event["start_date"], reverse=True)
+    verified.sort(key=lambda event: event["start_date"] or "", reverse=True)
     candidates, duplicate_count = deduplicate(
         verified, [event for event in results if event["verification"] == "candidate_link_only"]
     )
