@@ -68,7 +68,7 @@ function renderCard(item) {
     const badge = eventStatus === '종료' || status === '접수 마감' ? 'closed' : status === UNKNOWN ? 'check' : '';
     const url = safeUrl(item.url);
     const type = {screen: '🏌️ 스크린골프', field: '⛳ 필드골프'}[item.type] || UNKNOWN;
-    const room = !item.custom && !item.candidate && /^[a-z0-9-]{1,80}$/.test(item.id);
+    const room = !item.candidate && /^[a-zA-Z0-9-]{1,80}$/.test(item.id);
     return `<article class="card">
         <div class="row"><span class="pill ${badge}">${escapeHtml([eventStatus, status].filter(Boolean).join(' · '))}</span>
         <span class="muted">${type}</span></div>
@@ -206,7 +206,9 @@ $('cards').onclick = event => {
     if (!button) return;
     const {fav, edit, room, event: id} = button.dataset;
     if (room) {
-        location.href = 'golf-alert://room/' + room + '/' + encodeURIComponent(id);
+        const item = custom.find(entry => entry.id === id);
+        location.href = 'golf-alert://room/' + room + '/' + encodeURIComponent(id)
+            + (item ? '?title=' + encodeURIComponent(item.name) : '');
         return;
     }
     if (edit) { editLocal(edit); return; }
