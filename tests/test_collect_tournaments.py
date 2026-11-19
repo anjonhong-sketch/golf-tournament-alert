@@ -88,6 +88,19 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(entries[0]["title"], "천안 11월 스크린대회")
         self.assertIsNone(entries[0]["official_url"])
 
+    def test_coverage_audit_flags_unverified_brand_and_failed_sources(self):
+        lead = collector.candidate("네이버", "스릭슨 브레이브 골프대회", "https://example.com/lead", "아마추어 필드골프")
+        lead["discovery_url"] = lead.pop("official_url")
+        audit = collector.audit_coverage(
+            [{"title": "천안시장배 골프대회"}], [lead],
+            [{"provider": "네이버", "ok": False}, {"provider": "대한골프협회", "ok": None}],
+        )
+        self.assertEqual(audit["by_group"]["지역·지자체"]["registered"], 1)
+        self.assertEqual(audit["by_group"]["브랜드"]["unverified_leads"], 1)
+        self.assertEqual(audit["failed_sources"], ["네이버"])
+        self.assertEqual(audit["skipped_sources"], ["대한골프협회"])
+        self.assertEqual(audit["review_queue"][0]["discovery_url"], "https://example.com/lead")
+
     def test_web_results_do_not_claim_organizer_verification(self):
         results = '{"web":{"results":[{"title":"전국 아마추어 골프대회","url":"https://example.com/e"}]}}'
         with patch.object(collector, "fetch", return_value=results):
