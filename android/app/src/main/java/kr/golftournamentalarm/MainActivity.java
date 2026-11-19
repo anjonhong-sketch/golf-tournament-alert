@@ -238,6 +238,11 @@ public final class MainActivity extends Activity {
         String data = feed == null ? "null" : javascriptString(feed.toString());
         tournamentList.evaluateJavascript("showFeed(JSON.parse(" + data + "), "
                 + javascriptString(listMessage) + ")", null);
+        if (!FirebaseApp.getApps(this).isEmpty()) {
+            var user = FirebaseAuth.getInstance().getCurrentUser();
+            boolean signedIn = user != null && !user.isAnonymous();
+            tournamentList.evaluateJavascript("setAccountState(" + signedIn + "," + signedIn + ")", null);
+        }
     }
 
     private static String javascriptString(String value) {
