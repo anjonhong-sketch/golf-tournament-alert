@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-19T01:33:42.120768+00:00",
+  "updated_at": "2026-11-19T01:59:39.471293+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -123,6 +123,22 @@
       "source_urls": [
         "https://www.okonms.co.kr/theongc_china/wc_use/c_use_outline.php?championship_idx=8920&home_show=1"
       ],
+      "event_status": "진행 중",
+      "verification": "organizer_verified"
+    },
+    {
+      "id": "friends-cheonan-baekseok-23",
+      "provider": "프렌즈스크린 백석점",
+      "title": "프렌즈스크린 백석점 우리매장대회 제23회",
+      "category": "스크린골프",
+      "region": "충남 천안시 서북구 한들1로 87 백석동 중앙마트 2층",
+      "start_date": "2026-11-06",
+      "end_date": "2026-12-07",
+      "entry_fee": null,
+      "registration_status": "매장 참여",
+      "amateur_eligible": true,
+      "official_url": "https://pcmap.place.naver.com/place/1849344940/feed?feedId=22836432",
+      "eligibility": "A코스(포천힐스)는 누구나 참가 가능. B코스(베어크리크 춘천)는 2026년 해당 매장대회 1위 이력이 있는 고객은 참가 불가. 매장 문의 041-551-0072.",
       "event_status": "진행 중",
       "verification": "organizer_verified"
     },
