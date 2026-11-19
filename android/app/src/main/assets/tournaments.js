@@ -45,6 +45,7 @@ function normalize(event) {
         status: known(event.registration_status), eventStatus: known(event.event_status),
         fee: event.entry_fee, note: event.eligibility, url: event.official_url || event.discovery_url,
         candidate: event.verification === 'candidate_link_only',
+        resultUrl: event.result_url, resultSummary: event.result_summary,
     };
 }
 
@@ -76,10 +77,12 @@ function renderCard(item) {
         <div class="meta">📍 ${escapeHtml([known(item.region), item.venue].filter(Boolean).join(' · '))}<br>
         📅 ${escapeHtml(known(item.dates))}<br>💳 참가비: ${escapeHtml(known(item.fee))}</div>
         ${item.note ? `<p class="note">${escapeHtml(item.note)}</p>` : ''}
+        ${item.resultSummary ? `<p class="note">🏆 결과: ${escapeHtml(item.resultSummary)}</p>` : ''}
         <div class="actions">
             ${url ? `<a href="${escapeHtml(url)}" rel="noopener noreferrer">${item.candidate ? '후보 출처' : '공식 정보'} ↗</a>` : ''}
             <button data-fav="${id}">${favorites.has(item.id) ? '★ 저장됨' : '☆ 즐겨찾기'}</button>
             ${item.custom ? `<button data-edit="${id}">편집</button>` : ''}
+            ${item.resultUrl && safeUrl(item.resultUrl) ? `<a href="${escapeHtml(safeUrl(item.resultUrl))}" rel="noopener noreferrer">대회 결과 확인 ↗</a>` : ''}
         </div>
         ${room ? `<div class="actions"><button data-room="chat" data-event="${id}">대회 채팅</button>
             <button data-room="reviews" data-event="${id}">참가 후기</button></div>` : ''}
