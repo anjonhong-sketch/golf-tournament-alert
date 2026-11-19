@@ -13,6 +13,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.text.InputFilter;
 import android.view.ViewGroup;
+import android.view.MotionEvent;
+import android.view.ViewConfiguration;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -59,6 +61,9 @@ public final class MainActivity extends Activity {
     private int screen;
     private boolean roomOpen;
     private boolean refreshing;
+    private boolean pullFromTop;
+    private float pullStartX;
+    private float pullStartY;
 
     @Override
     protected void onCreate(Bundle state) {
@@ -139,6 +144,10 @@ public final class MainActivity extends Activity {
         tournamentList.getSettings().setDomStorageEnabled(true);
         tournamentList.getSettings().setAllowFileAccess(false);
         tournamentList.getSettings().setAllowContentAccess(false);
+        tournamentList.setOnTouchListener((view, event) -> {
+            handlePullToRefresh(event);
+            return false;
+        });
         tournamentList.setWebChromeClient(new WebChromeClient());
         tournamentList.setWebViewClient(new WebViewClient() {
             @Override
@@ -165,11 +174,44 @@ public final class MainActivity extends Activity {
         tournamentList.loadUrl("file:///android_asset/index.html");
     }
 
+    private void handlePullToRefresh(MotionEvent event) {
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN -> {
+                pullFromTop = !refreshing && !tournamentList.canScrollVertically(-1);
+                pullStartX = event.getX();
+                pullStartY = event.getY();
+            }
+            case MotionEvent.ACTION_MOVE -> {
+                if (pullFromTop) {
+                    float horizontal = Math.abs(event.getX() - pullStartX);
+                    float vertical = event.getY() - pullStartY;
+                    int slop = ViewConfiguration.get(this).getScaledTouchSlop();
+                    if (vertical < -slop || (horizontal > slop && horizontal > Math.abs(vertical))) {
+                        pullFromTop = false;
+                    }
+                }
+            }
+            case MotionEvent.ACTION_UP -> {
+                boolean shouldRefresh = pullFromTop && !tournamentList.canScrollVertically(-1)
+                        && event.getY() - pullStartY >= dp(72);
+                pullFromTop = false;
+                if (shouldRefresh) refreshList();
+            }
+            case MotionEvent.ACTION_CANCEL, MotionEvent.ACTION_POINTER_DOWN -> pullFromTop = false;
+            default -> { }
+        }
+    }
+
+    private void refreshList() {
+        if (refreshing) return;
+        listMessage = "대회 정보를 불러오는 중…";
+        updateList();
+        refresh();
+    }
+
     private void handleListAction(Uri url) {
         if ("refresh".equals(url.getHost())) {
-            listMessage = "대회 정보를 불러오는 중…";
-            updateList();
-            refresh();
+            refreshList();
             return;
         }
         if (!"room".equals(url.getHost()) || feed == null || url.getPathSegments().size() != 2) return;
