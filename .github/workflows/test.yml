@@ -35,6 +35,8 @@ jobs:
           if [ ! -f "$sdk_root/platforms/android-36/android.jar" ]; then
             "$sdk_root/cmdline-tools/latest/bin/sdkmanager" --sdk_root="$sdk_root" "platforms;android-36"
           fi
+      - name: Check tournament web app JavaScript syntax
+        run: node --check android/app/src/main/assets/tournaments.js
       - run: gradle --project-dir android assembleDebug lintDebug
       - uses: actions/upload-artifact@v4
         with:
