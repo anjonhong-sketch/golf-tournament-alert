@@ -6,7 +6,7 @@ const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char =>
     ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'})[char]);
 const known = value => value || UNKNOWN;
 const areas = {충청: ['충청', '충남', '충북'], 전라: ['전라', '전남', '전북'], 경상: ['경상', '경남', '경북']};
-let active = 'region';
+let active = 'screen';
 let feed = {tournaments: [], candidates: []};
 
 function readList(key) {
@@ -98,7 +98,7 @@ function render() {
             : !item.candidate && (scope === 'archive' ? ended : !ended);
         const matchRegion = !region || item.region?.startsWith('전국') ||
             (areas[region] || [region]).some(area => item.region?.startsWith(area));
-        return (active === 'fav' ? favorites.has(item.id) : inScope && (active === 'region' || item.type === active))
+        return (active === 'fav' ? favorites.has(item.id) : inScope && (active === 'screen' ? item.type === 'screen' : item.type === active))
             && matchRegion && (!status || storedStatus(item.status) === status)
             && [item.name, item.venue, item.region, item.provider, item.note].join(' ').toLowerCase().includes(query);
     });
@@ -125,7 +125,7 @@ document.querySelectorAll('[data-type]').forEach(button => {
 $('reset').onclick = () => {
     for (const id of ['search', 'region', 'status']) $(id).value = '';
     $('scope').value = 'current';
-    setTab('region');
+    setTab('screen');
 };
 $('refresh').onclick = () => { location.href = 'golf-alert://refresh'; };
 $('cards').onclick = event => {
@@ -169,4 +169,14 @@ $('add').onsubmit = event => {
     render();
 };
 
-setTab('all');
+setTab('screen');
+
+// Account actions are handled by the native Android authentication screen.
+for (const id of ['login','signup','my-events']) {
+  $(id).addEventListener('click', () => { location.href = 'golf-alert://' + (id === 'my-events' ? 'manage' : id); });
+}
+function setAccountState(signedIn, organizer) {
+  $('login').hidden = signedIn;
+  $('signup').hidden = signedIn;
+  $('my-events').hidden = !signedIn || !organizer;
+}
