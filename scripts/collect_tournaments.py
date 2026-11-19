@@ -36,6 +36,7 @@ SEARCH_TERMS = [
     "직장인 골프대회", "직장인 골프 챔피언십", "직장인 골프 최강전",
     "직장인 스크린골프대회", "기업 골프대회", "회사 골프대회",
     "직장인 골프리그", "직장인 골프 결과", "골프대회 우승자", "골프대회 최종 순위",
+    "DB증권 직장인 골프챔피언십", "직장인 골프 대항전", "직장인 골프 대회 모집",
     "KPGA 대회", "KLPGA 대회", "대한골프협회 대회", "미드아마추어 골프대회",
     "파크골프 대회", "파크골프 챔피언십",
 ]
@@ -197,7 +198,7 @@ def naver_candidates(client_id, secret):
     matches = []
     for channel in ("blog", "cafearticle"):
         for term in [*SEARCH_TERMS, *LOCAL_TERMS]:
-            query = urlencode({"query": term, "display": 15, "sort": "date"})
+            query = urlencode({"query": f"2026 {term}", "display": 15, "sort": "date"})
             response = json.loads(fetch(f"{NAVER_SEARCH_URL}/{channel}.json?{query}", headers))
             matches.extend(search_results("네이버 블로그·카페", response.get("items", []), "link"))
     return matches
@@ -209,7 +210,7 @@ def search_results(provider, results, url_key):
         title = html.unescape(re.sub(r"<[^>]+>", "", item["title"])).strip()
         url = canonical(item[url_key])
         if url and EVENT.search(title) and not EXCLUDED.search(title):
-            entry = candidate(provider, title, url, UNKNOWN)
+            entry = candidate(provider, title, url, "스크린골프" if re.search(r"스크린|GTOUR|골프존|SG골프", title, re.IGNORECASE) else "아마추어 필드골프")
             entry["discovery_url"] = entry.pop("official_url")
             entry["official_url"] = None
             entries.append(entry)
