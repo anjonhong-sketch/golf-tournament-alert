@@ -1,5 +1,11 @@
 name: Update golf tournaments
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/collect_tournaments.py'
+      - 'data/verified_tournaments.json'
+      - '.github/workflows/update-tournaments.yml'
   workflow_dispatch:
   schedule:
     - cron: '17 1-23 * * *'

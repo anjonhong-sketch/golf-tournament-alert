@@ -18,6 +18,7 @@ KST = timezone(timedelta(hours=9))
 SOURCES = [
     ("프렌즈스크린", "https://www.friendsscreen.kr/main/kakao-intro", "스크린골프"),
     ("골프존", "https://news.golfzon.com/ko/", "스크린골프"),
+    ("SG골프", "https://screen.sggolf.com/store/cupList", "스크린골프"),
     ("대한골프협회", "https://kgagolf.or.kr/web/life/schedule", "아마추어 필드골프"),
     ("한국미드아마추어골프연맹", "https://www.kmagf.co.kr/tour/list", "아마추어 필드골프"),
 ]
@@ -105,6 +106,8 @@ def official_candidates(provider, source, category):
             matches.append(candidate(provider, title, url, category))
     if provider == "프렌즈스크린":
         matches.extend(friends_events(" ".join(parser.visible), source))
+    if provider == "SG골프":
+        matches.extend(sg_events(" ".join(parser.visible), source))
     return matches
 
 
@@ -131,6 +134,32 @@ def friends_events(text, source):
     return found
 
 
+def sg_events(text, source):
+    provinces = "서울|부산|대구|인천|광주|대전|울산|세종|경기|강원|충북|충남|전북|전남|경북|경남|제주"
+    pattern = re.compile(
+        rf"(?:예정|진행|종료)\s+({provinces})\s+(.{{2,100}}?)\s*기간\s*:\s*"
+        r"(\d{4}-\d{2}-\d{2})\s*~\s*(\d{4}-\d{2}-\d{2})\s*"
+        r"주최매장\s*:\s*(.{2,80}?)(?=\s*(?:코스\s*:|참여매장))"
+    )
+    entries = []
+    for region, title, start_text, end_text, venue in pattern.findall(text):
+        title = title.strip()
+        venue = venue.strip()
+        if not re.search(r"대회|챔피언십|토너먼트", title) or EXCLUDED.search(title):
+            continue
+        start, end = date.fromisoformat(start_text), date.fromisoformat(end_text)
+        if start > end:
+            continue
+        key = f"{title_key(title)}:{region}:{title_key(venue)}:{start}"
+        identifier = hashlib.sha256(key.encode()).hexdigest()[:20]
+        entries.append({
+            **candidate("SG골프", title, source, "스크린골프"),
+            "id": f"sg-{identifier}", "region": f"{region} {venue}",
+            "start_date": str(start), "end_date": str(end), "verification": "official_schedule",
+        })
+    return entries
+
+
 def web_candidates(api_key, today):
     matches = []
     for term in SEARCH_TERMS:
@@ -155,7 +184,7 @@ def event_status(event, today):
         raise ValueError(f"Invalid event range: {event['id']}")
     event_state = "종료" if today > end else "예정" if today < start else "진행 중"
     registration = event.get("registration_status", UNKNOWN)
-    if event_state == "종료":
+    if event_state == "종료" and event.get("verification") != "official_schedule":
         registration = "접수 마감"
     elif event.get("registration_start") and event.get("registration_end"):
         opens = date.fromisoformat(event["registration_start"])
@@ -215,7 +244,7 @@ def collect(previous, now, offline=False):
             try:
                 entries = discover()
                 # Keep official schedules after they disappear from the current listing.
-                if provider == "프렌즈스크린":
+                if provider in {"프렌즈스크린", "SG골프"}:
                     new_ids = {item["id"] for item in entries}
                     entries.extend(item for item in old if item["provider"] == provider
                                    and item["verification"] == "official_schedule"
@@ -224,7 +253,8 @@ def collect(previous, now, offline=False):
             except (OSError, ValueError, KeyError, TypeError) as exc:
                 # Do not publish request details or credential-bearing errors.
                 status.update(ok=False, cached=bool(entries), error=type(exc).__name__)
-        status["candidate_count"] = len(entries)
+        status["candidate_count"] = sum(item["verification"] == "candidate_link_only" for item in entries)
+        status["schedule_count"] = sum(item["verification"] == "official_schedule" for item in entries)
         checks.append(status)
         results.extend(entries)
 

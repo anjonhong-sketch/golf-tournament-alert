@@ -9,8 +9,12 @@ class CollectorTests(unittest.TestCase):
     def test_event_end_uses_korea_calendar(self):
         before_midnight = datetime(2026, 12, 9, 14, 59, tzinfo=timezone.utc)
         midnight = datetime(2026, 12, 9, 15, tzinfo=timezone.utc)
-        current = collector.collect({}, before_midnight, offline=True)["tournaments"][0]
-        ended = collector.collect({}, midnight, offline=True)["tournaments"][0]
+        def quantum_at(instant):
+            feed = collector.collect({}, instant, offline=True)
+            return next(event for event in feed["tournaments"] if event["id"] == "friends-2026-quantum-9x-autumn")
+
+        current = quantum_at(before_midnight)
+        ended = quantum_at(midnight)
         self.assertEqual(current["event_status"], "진행 중")
         self.assertEqual(ended["event_status"], "종료")
         self.assertEqual(ended["registration_status"], "접수 마감")
@@ -47,6 +51,17 @@ class CollectorTests(unittest.TestCase):
         self.assertEqual(event["end_date"], "2026-12-01")
         self.assertIsNone(event["entry_fee"])
         self.assertIsNone(event["amateur_eligible"])
+
+    def test_sg_store_list_keeps_eligibility_unconfirmed(self):
+        html = ("<tr><td>진행</td><td>경남</td><td>테라스크린 골프대회"
+                "<span>기간 : 2026-11-19 ~ 2026-12-27</span>"
+                "<span>주최매장 : 테라스크린골프</span><span>코스 : A</span></td></tr>")
+        with patch.object(collector, "fetch", return_value=html):
+            events = collector.official_candidates("SG골프", "https://example.org/", "스크린골프")
+        self.assertEqual(len(events), 1)
+        self.assertEqual(events[0]["region"], "경남 테라스크린골프")
+        self.assertIsNone(events[0]["amateur_eligible"])
+        self.assertEqual(events[0]["registration_status"], "미확인")
 
     def test_failed_source_preserves_cached_candidates(self):
         item = collector.candidate("골프존", "다른 골프대회", "https://example.com/1", "스크린골프")

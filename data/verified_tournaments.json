@@ -65,5 +65,20 @@
       "https://kgagolf.or.kr/web/notice/noticeDetail?boardCode=6999&partCode=1584"
     ],
     "eligibility": "세부 참가 조건은 대회 요강 확인."
+  },
+  {
+    "id": "bucheon-2026-screen-1",
+    "provider": "부천시체육회",
+    "title": "제1회 부천시장배 스크린골프대회",
+    "category": "스크린골프",
+    "region": "경기 부천시 관내 골프존·프렌즈스크린",
+    "start_date": "2026-11-02",
+    "end_date": "2026-12-20",
+    "registration_start": "2026-11-02",
+    "registration_end": "2026-12-06",
+    "entry_fee": null,
+    "amateur_eligible": true,
+    "official_url": "https://bcsports.bucheon.go.kr/site/program/board/basicboard/view?boardid=1213743&boardtypeid=27658&currentpage=1&menuid=163002004001&pagesize=10",
+    "eligibility": "예선 11월 2일~12월 6일, 대한민국 국민 누구나 참여 가능. 시상은 부천 거주·재직 및 사전 QR 등록 조건 적용. 결선은 12월 20일."
   }
 ]
