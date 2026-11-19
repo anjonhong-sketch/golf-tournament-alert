@@ -53,3 +53,12 @@ a{color:#126b4b}
 .tabs button.active{background:#e6e6e6;color:#13563d}
 #scope{background:#086a47;color:#fff;border:0;font-weight:700;border-radius:12px}
 #refresh,#reset{border-radius:12px}
+
+/* Three equal tournament tabs, matching refresh/reset controls */
+.tabs button{min-height:74px}
+.utility-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.utility-row button{width:100%;min-height:46px;font-size:14px}
+.summary-row{margin-top:12px}
+.account-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.account-actions button{border:1px solid #fff8;background:transparent;color:white;font-size:13px;padding:8px 12px}
+.account-actions #signup{background:#f9df55;color:#233b2d;border-color:#f9df55}
