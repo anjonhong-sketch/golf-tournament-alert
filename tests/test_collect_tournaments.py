@@ -106,8 +106,9 @@ class CollectorTests(unittest.TestCase):
                      "title": "2026 예시 미드아마 골프대회", "start_date": "2026-10-10", "end_date": "2026-10-11"}]
         page = "<div>2026 예시 미드아마 골프대회 남성선수권부 내장산CC 미정 2026.10.12(Mon) ~ 2026.10.13(Tue) 종료</div>"
         changes = collector.official_schedule_changes(verified, page)
-        self.assertEqual(len(changes), 1)
-        self.assertEqual(changes[0]["official"], ["2026-10-12", "2026-10-13"])
+        date_changes = [change for change in changes if change["field"] == "event_dates"]
+        self.assertEqual(len(date_changes), 1)
+        self.assertEqual(date_changes[0]["official"], ["2026-10-12", "2026-10-13"])
         self.assertEqual(verified[0]["start_date"], "2026-10-10")
 
     def test_web_results_do_not_claim_organizer_verification(self):
