@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-11-19T00:38:56.625655+00:00",
+  "note": "공식 사이트에서 발견한 후보 링크이며 참가 가능 여부와 일정은 미검증",
+  "sources": [
+    {
+      "provider": "프렌즈스크린",
+      "source_url": "https://www.friendsscreen.kr/main/contest",
+      "ok": true,
+      "candidate_count": 0
+    },
+    {
+      "provider": "골프존 GTOUR",
+      "source_url": "https://gtour.com/",
+      "ok": false,
+      "error": "<urlopen error timed out>"
+    }
+  ],
+  "tournaments": []
+}
