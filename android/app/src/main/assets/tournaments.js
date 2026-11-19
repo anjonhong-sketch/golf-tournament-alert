@@ -79,7 +79,7 @@ function renderCard(item) {
         <div class="actions">
             ${url ? `<a href="${escapeHtml(url)}" rel="noopener noreferrer">${item.candidate ? '후보 출처' : '공식 정보'} ↗</a>` : ''}
             <button data-fav="${id}">${favorites.has(item.id) ? '★ 저장됨' : '☆ 즐겨찾기'}</button>
-            ${item.custom ? `<button data-delete="${id}">삭제</button>` : ''}
+            ${item.custom ? `<button data-edit="${id}">편집</button>` : ''}
         </div>
         ${room ? `<div class="actions"><button data-room="chat" data-event="${id}">대회 채팅</button>
             <button data-room="reviews" data-event="${id}">참가 후기</button></div>` : ''}
@@ -128,44 +128,119 @@ $('reset').onclick = () => {
     setTab('screen');
 };
 $('refresh').onclick = () => { location.href = 'golf-alert://refresh'; };
+
+let editingId = null;
+const form = $('add');
+const details = form.closest('details');
+const submit = form.querySelector('[type="submit"]');
+const deleteInEditor = document.createElement('button');
+deleteInEditor.type = 'button';
+deleteInEditor.textContent = '삭제';
+deleteInEditor.hidden = true;
+form.appendChild(deleteInEditor);
+const cancelEdit = document.createElement('button');
+cancelEdit.type = 'button';
+cancelEdit.textContent = '편집 취소';
+cancelEdit.hidden = true;
+form.appendChild(cancelEdit);
+function resetEditor() {
+    editingId = null;
+    form.reset();
+    submit.textContent = '내 대회 목록에 추가';
+    deleteInEditor.hidden = true;
+    cancelEdit.hidden = true;
+}
+cancelEdit.onclick = resetEditor;
+function editLocal(id) {
+    const item = custom.find(entry => entry.id === id);
+    if (!item) return;
+    editingId = id;
+    for (const key of ['name','type','region','venue','dates','fee','status','url']) {
+        if (form.elements.namedItem(key)) form.elements.namedItem(key).value = item[key] || '';
+    }
+    submit.textContent = '변경사항 저장';
+    deleteInEditor.hidden = false;
+    cancelEdit.hidden = false;
+    details.open = true;
+    details.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function confirmLocalDeletion(id) {
+    const overlay = document.createElement('div');
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.setAttribute('aria-label','대회 삭제 확인');
+    overlay.style.cssText = 'position:fixed;inset:0;background:#0008;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px';
+    const panel = document.createElement('div');
+    panel.style.cssText = 'background:white;border-radius:18px;padding:24px;width:min(100%,360px);box-shadow:0 10px 35px #0003;color:#183b30';
+    const message = document.createElement('p');
+    message.textContent = '정말 삭제하시겠습니까?';
+    message.style.cssText = 'font-size:19px;font-weight:bold;margin:0 0 20px';
+    const actions = document.createElement('div');
+    actions.style.cssText = 'display:flex;gap:12px';
+    const no = document.createElement('button');
+    no.textContent = '아니오';
+    const yes = document.createElement('button');
+    yes.textContent = '예';
+    for (const b of [no,yes]) b.style.cssText = 'flex:1;padding:12px;border-radius:10px';
+    no.onclick = () => overlay.remove();
+    yes.onclick = () => {
+        custom = custom.filter(item => item.id !== id);
+        favorites.delete(id);
+        save();
+        resetEditor();
+        details.open = false;
+        overlay.remove();
+        render();
+    };
+    actions.append(no,yes);
+    panel.append(message,actions);
+    overlay.append(panel);
+    document.body.append(overlay);
+    no.focus();
+}
+deleteInEditor.onclick = () => {
+    if (editingId) confirmLocalDeletion(editingId);
+};
 $('cards').onclick = event => {
     const button = event.target.closest('button');
     if (!button) return;
-    const {fav, delete: remove, room, event: id} = button.dataset;
+    const {fav, edit, room, event: id} = button.dataset;
     if (room) {
         location.href = 'golf-alert://room/' + room + '/' + encodeURIComponent(id);
         return;
     }
-    if (fav) {
-        if (favorites.has(fav)) favorites.delete(fav);
-        else favorites.add(fav);
-    } else if (remove && confirm('등록한 대회를 삭제할까요?')) {
-        custom = custom.filter(item => item.id !== remove);
-        favorites.delete(remove);
-    } else {
-        return;
-    }
+    if (edit) { editLocal(edit); return; }
+    if (!fav) return;
+    if (favorites.has(fav)) favorites.delete(fav);
+    else favorites.add(fav);
     save();
     render();
 };
-
-$('add').onsubmit = event => {
+form.onsubmit = event => {
     event.preventDefault();
-    const fields = new FormData(event.target);
+    const fields = new FormData(form);
     const url = safeUrl(fields.get('url'));
     if (!url) {
         alert('https:// 로 시작하는 공식 링크를 입력해 주세요.');
         return;
     }
-    custom.unshift({
-        id: 'custom-' + Date.now(), custom: true,
+    const values = {
+        custom: true,
         name: String(fields.get('name')), type: String(fields.get('type')),
         region: String(fields.get('region')), venue: String(fields.get('venue')),
         dates: String(fields.get('dates')), fee: String(fields.get('fee')),
         status: storedStatus(fields.get('status')), url,
-    });
+    };
+    if (editingId) {
+        const index = custom.findIndex(item => item.id === editingId);
+        if (index < 0) { alert('수정할 대회를 찾지 못했습니다.'); return; }
+        custom[index] = {...custom[index], ...values};
+    } else {
+        custom.unshift({id:'custom-' + Date.now(), ...values});
+    }
     save();
-    event.target.reset();
+    resetEditor();
+    details.open = false;
     render();
 };
 
