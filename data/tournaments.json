@@ -63,6 +63,26 @@
   ],
   "tournaments": [
     {
+      "id": "diwc-2026-science-daedeok-1",
+      "provider": "대덕복지센터",
+      "title": "제1회 사이언스대덕골프장 골프대회",
+      "category": "아마추어 필드골프",
+      "region": "대전 사이언스대덕골프장",
+      "start_date": "2026-09-12",
+      "end_date": "2026-09-12",
+      "entry_fee": "20,000원",
+      "registration_status": "접수 마감",
+      "amateur_eligible": true,
+      "official_url": "https://www.diwc.or.kr/sub050101/view/id/6861",
+      "eligibility": "전민골프연습장 등 지정 시설 회원 대상. 프로 및 주니어아카데미 연습생 제외.",
+      "registration_start": "2026-08-12",
+      "registration_end": "2026-08-20",
+      "result_url": "https://diwc.or.kr/sub050101/view/id/6874",
+      "result_summary": "대덕복지센터가 메달리스트와 신페리오 부문 결과를 공개했습니다.",
+      "event_status": "종료",
+      "verification": "organizer_verified"
+    },
+    {
       "id": "sg-manual-magic-2026-11",
       "provider": "SG골프",
       "title": "SG 매직스크린 매장대회",

@@ -53,6 +53,15 @@ LOCAL_TERMS = [
     "천안시장배 골프대회", "천안시 골프협회장배", "천안 직장인 골프대회",
     "아산시장배 골프대회", "충남도지사배 골프대회",
 ]
+REGIONAL_PREFIXES = (
+    "천안", "아산", "충남", "대전", "대덕", "세종", "충북",
+    "서울", "경기", "인천", "강원", "전북", "전남", "광주",
+    "경북", "경남", "대구", "울산", "부산", "제주",
+)
+LOCAL_TERMS = list(dict.fromkeys([
+    *(f"{region} 골프대회" for region in REGIONAL_PREFIXES),
+    *LOCAL_TERMS,
+]))
 EVENT = re.compile(
     r"팔도페스티벌|스크린\s*대회|매장\s*대회|"
     r"(?:골프|파크골프|타이틀리스트|스릭슨|브레이브|젝시오|캘러웨이|테일러메이드|브리지스톤|KPGA|KLPGA|GTOUR).{0,40}"
@@ -195,20 +204,22 @@ def sg_events(text, source):
 
 def web_candidates(api_key, today):
     matches = []
-    for term in SEARCH_TERMS:
-        query = urlencode({"q": f"{today.year} {term}", "country": "KR",
+    for term in dict.fromkeys([*LOCAL_TERMS, *SEARCH_TERMS]):
+        search = f"{term} {today.year}" if term in LOCAL_TERMS else f"{today.year} {term}"
+        query = urlencode({"q": search, "country": "KR",
                            "search_lang": "ko", "count": 15})
         content = json.loads(fetch(SEARCH_URL + "?" + query, {"X-Subscription-Token": api_key}))
         matches.extend(search_results("웹 검색", content.get("web", {}).get("results", []), "url"))
     return matches
 
 
-def naver_candidates(client_id, secret):
+def naver_candidates(client_id, secret, today=None):
+    today = today or datetime.now(KST).date()
     headers = {"X-Naver-Client-Id": client_id, "X-Naver-Client-Secret": secret}
     matches = []
     for channel in ("blog", "cafearticle", "news"):
-        for term in [*SEARCH_TERMS, *LOCAL_TERMS]:
-            query = urlencode({"query": term if term in LOCAL_TERMS else f"2026 {term}", "display": 30, "sort": "date"})
+        for term in dict.fromkeys([*LOCAL_TERMS, *SEARCH_TERMS]):
+            query = urlencode({"query": term if term in LOCAL_TERMS else f"{today.year} {term}", "display": 30, "sort": "date"})
             try:
                 response = json.loads(fetch(f"{NAVER_SEARCH_URL}/{channel}.json?{query}", headers))
                 matches.extend(search_results("네이버 블로그·카페·뉴스", response.get("items", []), "originallink" if channel == "news" else "link"))
@@ -398,7 +409,7 @@ def collect(previous, now, offline=False):
     skip_naver = ("오프라인 실행" if offline else "검색 키 미설정" if not (naver_id and naver_secret)
                   else "다음 검색 실행 대기" if os.getenv("RUN_WEB_SEARCH", "true") != "true" else None)
     check("네이버 블로그·카페·뉴스", NAVER_SEARCH_URL,
-          lambda: naver_candidates(naver_id, naver_secret), skip_naver)
+          lambda: naver_candidates(naver_id, naver_secret, today), skip_naver)
     automatic = {}
     known_titles = {title_key(event["title"]) for event in verified}
     duplicate_schedules = 0
