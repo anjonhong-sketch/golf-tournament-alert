@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-20T13:38:54.727222+00:00",
+  "updated_at": "2026-11-20T15:14:04.810314+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -89,7 +89,7 @@
       "amateur_eligible": null,
       "verification": "official_schedule",
       "official_url": "https://screen.sggolf.com/store/cupList",
-      "event_status": "예정",
+      "event_status": "진행 중",
       "registration_status": "미확인"
     },
     {
