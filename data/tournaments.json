@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-27T04:26:05.295442+00:00",
+  "updated_at": "2026-11-27T06:20:37.621339+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
@@ -16,7 +16,7 @@
       "source_url": "https://news.golfzon.com/ko/category/press-center/press-release/",
       "ok": true,
       "cached": false,
-      "candidate_count": 5,
+      "candidate_count": 6,
       "schedule_count": 0
     },
     {
@@ -1136,6 +1136,21 @@
       "verification": "candidate_link_only"
     },
     {
+      "id": "b99ad5e9d7d2ded0ca7bce95",
+      "provider": "골프존",
+      "title": "골프존, KPGA·KLPGA 인기 프로와 ‘미리보는 2026 골프존 차이나 오픈’ 특별 라이브 진행",
+      "official_url": "https://news.golfzon.com/ko/%ea%b3%a8%ed%94%84%ec%a1%b4-kpga%c2%b7klpga-%ec%9d%b8%ea%b8%b0-%ed%94%84%eb%a1%9c%ec%99%80-%eb%af%b8%eb%a6%ac%eb%b3%b4%eb%8a%94-2026-%ea%b3%a8%ed%94%84%ec%a1%b4-%ec%b0%a8%ec%9d%b4%eb%82%98",
+      "category": "스크린골프",
+      "region": "미확인",
+      "entry_fee": null,
+      "start_date": null,
+      "end_date": null,
+      "event_status": "미확인",
+      "registration_status": "미확인",
+      "amateur_eligible": null,
+      "verification": "candidate_link_only"
+    },
+    {
       "id": "599e9efa8dde4d9a548af600",
       "provider": "골프존",
       "title": "골프존, ‘2026 롯데렌터카 WGTOUR’ 7차 대회 성료.. 박단유, 최종라운드 11언더파 맹타로 통산 9승 달성!",
@@ -1185,7 +1200,7 @@
   "coverage_audit": {
     "scope": "검색된 자료와 등록 목록 비교. 전국 대회 전체 대비 누락률이 아닙니다.",
     "registered": 63,
-    "unverified_leads": 4,
+    "unverified_leads": 5,
     "failed_sources": [
       "SG골프"
     ],
@@ -1218,6 +1233,11 @@
     "review_queue": [
       {
         "title": "골프존 차이나 오픈",
+        "discovery_url": null,
+        "provider": "골프존"
+      },
+      {
+        "title": "골프존, KPGA·KLPGA 인기 프로와 ‘미리보는 2026 골프존 차이나 오픈’ 특별 라이브 진행",
         "discovery_url": null,
         "provider": "골프존"
       },
