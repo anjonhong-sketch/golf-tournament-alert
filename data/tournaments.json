@@ -1,13 +1,14 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-28T16:03:55.084459+00:00",
+  "updated_at": "2026-11-28T17:05:51.408262+00:00",
   "note": "확인된 대회와 출처 검토가 필요한 후보를 분리합니다. null과 미확인은 정보 미확인입니다.",
   "sources": [
     {
       "provider": "프렌즈스크린",
       "source_url": "https://www.friendsscreen.kr/main/kakao-intro",
-      "ok": true,
+      "ok": false,
       "cached": false,
+      "error": "HTTPError",
       "candidate_count": 0,
       "schedule_count": 0
     },
@@ -1202,6 +1203,7 @@
     "registered": 63,
     "unverified_leads": 5,
     "failed_sources": [
+      "프렌즈스크린",
       "SG골프"
     ],
     "skipped_sources": [
